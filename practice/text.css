@@ -1,0 +1,15 @@
+  .video {
+    font-family: Roboto;
+    font-size: 18px;
+    font-weight: bold;
+    text-align: left;
+    width: 300px;
+    line-height: 24px;
+    margin-bottom: 6px;
+  }
+  .firstrow {
+    font-family: Roboto;
+    font-size: 14px;
+    color: gray;
+    margin-top: 0;
+  }

@@ -1,0 +1,195 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+p{
+  font-size: 16px;
+}
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background-color: black;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.left-section {
+  display: flex;
+  align-items: center;
+}
+
+.amazon-button {
+  background-color: black;
+  border: none;
+  margin-left: 10px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding-right: 20px;
+  cursor: pointer;
+}
+
+.amazon-button:hover {
+  border-style: solid;
+  border-color: white;
+  border-width: 1px;
+  border-radius: 10px;
+}
+
+.amazon-logo {
+  height: 30px;
+  padding-left: 25px;
+}
+
+.middle-section {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  max-width: 1000px;
+}
+
+.search-bar {
+  height: 40px;
+  padding-left: 10px;
+  margin-left: 10px;
+  border-style: solid;
+  border-width: 1px;
+  width: 0px;
+  flex: 1;
+  border-color: black;
+  border-radius: 8px;
+}
+
+.search-button {
+  height: 44px;
+  width: 44px;
+  border-style: solid;
+  border-width: 1px;
+  margin-left: -10px;
+  background-color: rgb(246, 173, 39);
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  cursor: pointer;
+}
+
+.right-section {
+  display: flex;
+  align-items: center;
+  margin-left: 30px;
+  margin-right: 10px;
+}
+
+.return-button {
+  width: 70px;
+  height: 60px;
+  background-color: black;
+  color: white;
+  border: none;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.return-button:hover {
+  border-style: solid;
+  cursor: pointer;
+  border-width: 1px;
+  border-radius: 2px;
+}
+
+.cart-button {
+  width: 80px;
+  height: 60px;
+  background-color: black;
+  color: white;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+
+}
+
+.cart-button:hover {
+  border-style: solid;
+  cursor: pointer;
+  border-width: 1px;
+  border-radius: 2px;
+}
+.struture{
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 0px;
+
+}
+@media (max-width: 2000px){
+  .struture{
+    grid-template-columns: repeat(7, 1fr);
+  }
+}
+@media (max-width: 1600px){
+  .struture{
+    grid-template-columns: repeat(6, 1fr);
+  }
+}@media (max-width: 1300px){
+  .struture{
+    grid-template-columns: repeat(5, 1fr);
+  }
+}@media (max-width: 1000px){
+  .struture{
+    grid-template-columns: repeat(4, 1fr);
+  }
+}@media (max-width: 800px){
+  .struture{
+    grid-template-columns: repeat(3, 1fr);
+  }
+}@media (max-width: 570px){
+  .struture{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}@media (max-width: 450px){
+  .struture{
+    grid-template-columns:  1fr;
+  }
+}
+.boxes{
+  padding-top: 40px;
+  padding-bottom: 25px;
+  padding-left: 25px;
+  padding-right: 25px;
+  border-right: 1px solid  rgb(231, 231, 231);
+  border-bottom: 1px solid rgb(231, 231, 231);
+}
+
+.sock-row{  
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  height: 200px;
+}
+.sock{
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.text-class{
+  margin-bottom: 10px;
+}
+.text-box{
+  height: 50px;
+}
+.select-button{
+  border-radius: 5px;
+  height: 25px;
+  width: 40px;
+  background-color: rgb(244, 243, 241);
+}
+.add{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.add-Button{
+  background-color: rgb(246, 173, 39);
+  width: 165px;
+  height: 32px;
+  border-radius: 30px;
+}

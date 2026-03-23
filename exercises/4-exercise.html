@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>exercise-4</title>
+  </head>
+  <body>
+    <script>
+      function countWord(){
+        let arrayWord = ['apple','grape','apple','apple'];
+        let count = {};
+        for(let i =0;i < arrayWord.length;i++){
+          let word = arrayWord[i];
+          /*check the element is exist in object or not 
+          if (yes or true) will increse number
+          if (not or false) will assign 1 for that*/
+          if(count[word]){
+            count[word]++;
+          }
+          else{
+            count[word] = 1;
+          }
+        }
+        /*key is stand for element in the array*/
+        for(let key in count){
+          console.log(key + " " + count[key]);
+        }
+      }
+      countWord();
+    </script>
+  </body>
+</html>

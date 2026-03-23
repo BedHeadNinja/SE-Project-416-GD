@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<htm;>
+  <head>
+    <title>Practice</title>
+    <style>
+      body{
+        background-color: rgb(25,25,25);
+        color: white;
+        font-family: Arial;
+      }
+      .title{
+        font-size: 30px;
+        font-weight: bold;
+      }
+      .move-icon{
+        height: 50px;
+      }
+      .move-button{
+        background-color: rgb(245, 245, 89);
+        border: 3px solid white;
+        width: 100px;
+        height: 100px;
+        border-radius: 50px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <p class = "title"> Rock Paper Scissors Game</p>
+
+    <button onclick="
+      playgame('rock');
+      " class="move-button"> 
+        <img src="picture/rock.jpeg" class="move-icon"></img> 
+      
+    </button>
+
+    <button onclick="
+      playgame('paper');
+    " class="move-button"> 
+      <img src="picture/paper.jpeg" class="move-icon"><img>
+    
+    </button>
+
+    <button onclick="
+      playgame('scissors');  
+    " class="move-button"> 
+      <img src="picture/scissors.jpeg" class="move-icon"><img>
+    
+    </button>
+    <p class="js-result"></p>
+    <p class="js-moves"></p>
+    <p class="js-score"></p>
+
+    <button onclick ="
+      score.wins = 0;
+      score.loses = 0;
+      score.ties =0;
+      /*remove the score from localStorage and localStorage.getItem('score') doesn't exist 
+        but it doesn't work if we dont have line 41 to 46. 
+        Because when we access the value which is the null value the program will 
+        see that like a false, that why we need to set score to a default value*/
+      localStorage.removeItem('score');
+      updateScore();
+    ">Reset score</button>
+    <script 
+      src="rock-paper-scissors.js">
+    </script>
+  </body>
+</htm>
