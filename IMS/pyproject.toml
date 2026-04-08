@@ -1,0 +1,14 @@
+[project]
+name = "IMS"
+description = "PLACEHOLDER"
+dynamic = ["version"]
+dependencies = [
+    "flask",
+    "flask-sqlalchemy",
+    "flask-migrate",
+    "psycopg2-binary",
+]
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"
