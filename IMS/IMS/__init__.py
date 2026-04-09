@@ -1,22 +1,24 @@
 from flask import Flask
-#!!! NOT WORKING, OVERRIDING from .config import Config
+from .config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_login import LoginManager
 
 # Create flask object
 app = Flask(__name__)
 
-#!!! NOT WORKING, OVERRIDING
 # Use configuration file config.py
-#app.config.from_object
-
-# Set database URI
-app.config['SQLALCHEMY_DATABASE_URI']='postgresql+psycopg2://brandon@localhost:5432/flask_test'
+app.config.from_object(Config)
 
 #Create database object
 db = SQLAlchemy(app)
+
+# Create database migration object
 migrate = Migrate(app, db)
 
+# Create login manager object, and set loginID as the view function that handles logins
+login = LoginManager(app)
+login.login_view = 'loginID'
+
+# Import routes and models
 from IMS import routes, models
-#from .routes import route
-#from .models import models
