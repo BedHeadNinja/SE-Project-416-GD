@@ -65,3 +65,22 @@ class User(UserMixin, db.Model):
 
     def __repr__(self):
         return '<User {}>'.format(self.name)
+
+"""
+#
+#
+#
+#
+#
+#
+"""
+class Product(db.Model):
+    # PRODUCT ID - PRIMARY KEY
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    # PRODUCT NAME
+    name: so.Mapped[str] = so.mapped_column(sa.String(64), unique=False)
+    # PRODUCT COUNT
+    count : so.Mapped[int] = so.mapped_column()
+
+    def __repr__(self):
+        return '<Product {} : {}>'.format(self.id,self.name)

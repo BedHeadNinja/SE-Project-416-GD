@@ -1,11 +1,21 @@
 [project]
 name = "IMS"
+authors = [
+    {name = "Brandon Copeland"},
+    {name = "David Doyle"},
+    {name = "Tanisha Bajaj"},
+    {name = "Kiet Bui"},
+]
 description = "PLACEHOLDER"
+readme = "README.md"
 dynamic = ["version"]
+requires-python = ">= 3.14.3"
 dependencies = [
     "flask",
     "flask-sqlalchemy",
     "flask-migrate",
+    "flask-login",
+    "flask-wtf",
     "psycopg2-binary",
 ]
 
