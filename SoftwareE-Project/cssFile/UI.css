@@ -1,0 +1,169 @@
+ body {
+   font-family: Arial, Helvetica, sans-serif;
+ }
+
+ p {
+   font-size: 16px;
+ }
+
+ .header {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   background-color: black;
+   top: 0;
+   right: 0;
+   left: 0;
+ }
+
+ .left-section {
+   display: flex;
+   align-items: center;
+ }
+
+ .amazon-button {
+   background-color: black;
+   border: none;
+   margin-left: 10px;
+   height: 60px;
+   display: flex;
+   align-items: center;
+   padding-right: 20px;
+   cursor: pointer;
+   width: 400px;
+ }
+
+ .amazon-button:hover {
+   border-style: solid;
+   border-color: white;
+   border-width: 1px;
+   border-radius: 10px;
+ }
+
+ .amazon-logo {
+   height: 30px;
+   padding-left: 25px;
+ }
+
+ .middle-section {
+   display: flex;
+   align-items: center;
+   flex: 1;
+   max-width: 1000px;
+ }
+
+ .search-bar {
+   height: 40px;
+   padding-left: 10px;
+   margin-left: 10px;
+   border-style: solid;
+   border-width: 1px;
+   width: 0px;
+   flex: 1;
+   border-color: black;
+   border-radius: 8px;
+ }
+
+ .search-button {
+   height: 44px;
+   width: 44px;
+   border-style: solid;
+   border-width: 1px;
+   margin-left: -10px;
+   background-color: rgb(246, 173, 39);
+   border-top-right-radius: 8px;
+   border-bottom-right-radius: 8px;
+   cursor: pointer;
+ }
+
+ .right-section {
+   display: flex;
+   align-items: center;
+   margin-left: 30px;
+   margin-right: 10px;
+ }
+
+ .return-button {
+   width: 70px;
+   height: 60px;
+   background-color: black;
+   color: white;
+   border: none;
+   font-size: 14px;
+   cursor: pointer;
+ }
+
+ .return-button:hover {
+   border-style: solid;
+   cursor: pointer;
+   border-width: 1px;
+   border-radius: 2px;
+ }
+
+ .cart-button {
+   width: 80px;
+   height: 60px;
+   background-color: black;
+   color: white;
+   border: none;
+   font-size: 15px;
+   cursor: pointer;
+
+ }
+
+ .cart-button:hover {
+   border-style: solid;
+   cursor: pointer;
+   border-width: 1px;
+   border-radius: 2px;
+ }
+ .first-row{
+  display: grid;
+  grid-template-columns:repeat(4, 1fr);
+  gap: 0;
+  margin-top: 2p;
+ }
+ .product{
+  border-left: solid;
+  border-bottom: solid;
+  display: flex;
+  justify-content: center;
+  border-width: 1px;
+ }
+ .product4{
+  border-bottom: solid;
+  border-right: solid;
+  border-left: solid;
+  border-width: 1px;
+ }
+ .product-link{
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+ }
+ .product-link:hover {
+  background-color: rgb(183, 162, 162);
+  cursor: pointer;
+}
+ .tableCSS{
+  width: 100%;
+  overflow-x: autor;
+  margin-top: 10px;
+  background-color: white;
+ }
+ table{
+  border-collapse: collapse;
+  width: 100%;
+ }
+ th, tr{
+  border: 1px solid black;
+  padding: 8px;
+  text-align: center;
+ }
+ th{
+  background-color: #f2f2f2;
+ }
