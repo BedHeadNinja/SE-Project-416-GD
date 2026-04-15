@@ -64,14 +64,18 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def __repr__(self):
-        return '<User {}>'.format(self.name)
+        return '<User(id={},name={})>'.format(self.id, self.name)
 
 """
+#       Table: Product
+#   Represents a product in the system
 #
-#
-#
-#
-#
+#   Data:
+#       id: Product ID. Primary key
+#       name: Name of the product
+#       !! CONSIDER RENAMING THE FOLLOWING:
+#       on_hand_count: Quantity of the product on hand
+#       on_order_count: Quantity of the product currently ordered
 #
 """
 class Product(db.Model):
@@ -79,8 +83,10 @@ class Product(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     # PRODUCT NAME
     name: so.Mapped[str] = so.mapped_column(sa.String(64), unique=False)
-    # PRODUCT COUNT
-    count : so.Mapped[int] = so.mapped_column()
+    # CURRENT PRODUCT COUNT
+    on_hand_count : so.Mapped[int] = so.mapped_column()
+    # PRODUCT ON ORDER
+    on_order_count : so.Mapped[int] = so.mapped_column()
 
     def __repr__(self):
-        return '<Product {} : {}>'.format(self.id,self.name)
+        return '<Product(id={}, name={}, on_hand_count={}, on_order_count={})>'.format(self.id,self.name,self.on_hand_count,self.on_order_count)

@@ -1,10 +1,10 @@
 from flask import render_template, flash, redirect, url_for, session
-from flask_login import current_user, login_user, login_required
+from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
 
 #! Local Imports!#
 from IMS import app, db
-from IMS.models import User
+from IMS.models import User, Product
 from IMS.forms import IDForm, PasswordForm
 
 """                                               """
@@ -106,3 +106,25 @@ def logout():
     # Use Flask-Login to log out the user, and return to index
     logout_user()
     return redirect(url_for('loginID'))
+
+
+"""
+#   Function: inventory
+#   Handles displaying and managing inventory
+#   !!INCOMPLETE!!
+"""
+@app.route('/inventory', methods=['GET','POST'])
+@login_required
+def inventory():
+    #Pull product data from database
+    products = db.session.query(Product.__table__).all()
+
+    ## !!INCOMPLETE!! - UNDER CONSTRUCTION!! ##
+    #if request.method =='POST':
+        #if request
+
+    return render_template('inventory.html',title='PLACEHOLDER', products=products)
+
+
+
+

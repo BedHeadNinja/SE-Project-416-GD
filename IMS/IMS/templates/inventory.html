@@ -1,0 +1,27 @@
+<!doctype html>
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="table">
+        <table>
+            <thead>
+                <tr>
+                    <td>Product ID</td>
+                    <td>Name</td>
+                    <td>Current Count</td>
+                    <td>On Order</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product[0] }}</td>
+                    <td>{{ product[1] }}</td>
+                    <td>{{ product[2] }}</td>
+                    <td>{{ product[3] }}</td>    
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
