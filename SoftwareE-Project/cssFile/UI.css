@@ -1,0 +1,104 @@
+ body {
+   font-family: Arial, Helvetica, sans-serif;
+   height: 100vh;
+ }
+
+ p {
+   font-size: 19px;
+ }
+
+ .header {
+   display: flex;
+   flex-direction: row;
+   justify-content: space-between;
+   background-color: black;
+   top: 0;
+   right: 0;
+   left: 0;
+ }
+
+ .left-section {
+   display: flex;
+   align-items: center;
+ }
+ 
+ .right-section {
+   display: flex;
+   align-items: center;
+   margin-left: 30px;
+   margin-right: 10px;
+ }
+
+ .cart-button {
+   width: 80px;
+   height: 60px;
+   background-color: black;
+   color: white;
+   border: none;
+   font-size: 15px;
+   cursor: pointer;
+
+ }
+
+ .cart-button:hover {
+   border-style: solid;
+   cursor: pointer;
+   border-width: 1px;
+   border-radius: 2px;
+ }
+
+ .first-row {
+   display: grid;
+   grid-template-columns: repeat(2, 1fr);
+   gap: 0;
+   margin-top: 2p;
+ }
+
+ .product {
+   border: solid;
+   display: flex;
+   justify-content: center;
+   border-width: 1px;
+ }
+
+ .product4 {
+   border-bottom: solid;
+   border-right: solid;
+   border-left: solid;
+   border-width: 1px;
+ }
+
+ .product-link {
+   display: block;
+   text-decoration: none;
+   color: inherit;
+   width: 100%;
+   height: 100%;
+   display: flex;
+   justify-content: center;
+ }
+
+ .product-link:hover {
+   background-color: rgb(183, 162, 162);
+   cursor: pointer;
+ }
+
+ .tableCSS {
+   width: 100%;
+   overflow-x: auto;
+   margin-top: 10px;
+   background-color: white;
+ }
+
+ table {
+   border-collapse: collapse;
+   width: 100%;
+ }
+
+ table td,
+ table th {
+   border: 1px solid black;
+   padding: 8px;
+   text-align: center;
+   font-weight: bold;
+ }

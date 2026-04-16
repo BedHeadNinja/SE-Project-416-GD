@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Manager_Product</title>
+  <link rel="stylesheet" href="../cssFile/UI.css">
+  <link rel="stylesheet" href="../cssFile/header.css">
+  <link rel="stylesheet" href="../cssFile/addTable.css">
+</head>
+
+<body>
+  <div class="header">
+    <div class="left-section">
+      <button class="logo" onclick="location.reload()">Name-Company</button>
+    </div>
+    <div class="right-section">
+      <button class="cart-button">Something</button>
+    </div>
+  </div>
+  <div>
+    <div class="first-row">
+      <div class="product">
+        <a href="Manager_product.html" target="_blank" class="product-link">
+          <p>Product</p>
+        </a>
+      </div>
+      <div class="product">
+        <a href="Manager_employee.html" target="_blank" class="product-link">
+          <p>Employee</p>
+        </a>
+      </div>
+    </div>
+    <div class="tableCSS">
+      <table>
+        <button class="js-addButton" onclick="openaddElement()">+</button>
+        <br>
+        <tr>
+          <th>Product Name</th>
+          <th>ID</th>
+          <th>Count</th>
+          <th>Exp.date</th>
+        </tr>
+        <tr>
+          <th>abc</th>
+          <th>abc</th>
+          <th>abc</th>
+          <th>abc</th>
+        </tr>
+      </table>
+    </div>
+
+    <div class="addElementForm" id="form">
+      <h2>Add Product</h2>
+      <button class="x-button" onclick="closeForm()">x</button>
+
+      </button>
+      <label>Product Name:</label><br>
+      <input type="text" id="name"><br><br>
+
+      <label>ID:</label><br>
+      <input type="text" id="id"><br><br>
+
+      <label>Count:</label><br>
+      <input type="text" id="count"><br><br>
+
+      <label>Exp.date:</label><br>
+      <input type="text" id="expDate"><br><br>
+      <button onclick="addProduct()">Submit</button>
+    </div>
+    <script src="../jsFile/manager_product.js"></script>
+</body>
+
+</html>

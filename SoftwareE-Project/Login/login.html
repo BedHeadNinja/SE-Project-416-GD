@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Login_EmployeeID</title>
+  <link rel="stylesheet" href="../cssFile/UI.css">
+  <link rel="stylesheet" href="../cssFile/header.css">
+  <link rel="stylesheet" href="../cssFile/login.css">
+</head>
+
+<body>
+
+  <div class="header">
+    <div class="left-section">
+      <button class="logo" onclick="location.reload()"> Name-Company </button>
+    </div>
+    <div class="right-section">
+      <button class="cart-button">Something</button>
+    </div>
+  </div>
+  <div class="body-class">
+    <div>
+      <h1 class="employeeID">Employee ID</h1>
+    </div>
+    <div class="login-class">
+      <form class="login-outline">
+        <label for="employeeID"></label>
+        <input class="placeholder" type="text" id="employeeID" name="employeeID" required>
+        <br><br>
+        <div class="Enter-button">
+          <button class="enter" type="submit" onclick="PasswordRequired()">Enter</button>
+        </div>
+      </form>
+    </div>
+  </div>  
+
+  <script>
+    function PasswordRequired() {
+      const employeeID = document.getElementById("employeeID").value;
+      if (employeeID === "") {
+        alert("Please enter your employee ID.");
+      }
+    }
+  </script>
+</body>
+
+</html>
