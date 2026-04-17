@@ -20,5 +20,5 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'loginID'
 
-# Import routes and models
-from IMS import routes, models
+# Import routes, models and errors
+from IMS import routes, models, errors

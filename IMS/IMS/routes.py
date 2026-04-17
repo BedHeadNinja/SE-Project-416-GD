@@ -5,7 +5,7 @@ import sqlalchemy as sa
 #! Local Imports!#
 from IMS import app, db
 from IMS.models import User, Product
-from IMS.forms import IDForm, PasswordForm
+from IMS.forms import IDForm, PasswordForm, AddProductForm, RemoveProductForm, OrderProductForm
 
 """                                               """
 #                  Module - Routes.py               #
@@ -52,7 +52,7 @@ def loginID():
         user_input = {'id':form.username.data}
         # Search the database for id matching the user's input
         user = db.session.scalar(
-            sa.select(User).where(User.id == form.username.data))
+            sa.select(User).where(User.id == user_input['id']))
         # If password isn't found, print an error message and repeat page
         if user is None:
             flash('Invalid ID')
@@ -119,11 +119,62 @@ def inventory():
     #Pull product data from database
     products = db.session.query(Product.__table__).all()
 
-    ## !!INCOMPLETE!! - UNDER CONSTRUCTION!! ##
-    #if request.method =='POST':
-        #if request
+    # Create form objects
+    addProductForm = AddProductForm()
+    removeProductForm = RemoveProductForm()
+    orderProductForm = OrderProductForm()
+    #alertForm = AlertForm()
 
-    return render_template('inventory.html',title='PLACEHOLDER', products=products)
+    # If the user chooses to add a product, add its values to the database
+    if addProductForm.validate_on_submit():
+        newProduct = Product(product_name=addProductForm.product_name.data, on_hand_count=addProductForm.on_hand_count.data)
+        db.session.add(newProduct)
+        db.session.commit()
+        # Refresh page
+        return redirect(url_for('inventory'))
+
+    # If the user chooses to remove a product, delete it from the database
+    if removeProductForm.validate_on_submit():
+        removingProduct = db.session.scalar(sa.select(Product).where(Product.product_id == removeProductForm.product_id.data))
+        # If no matching product id is found, return an error message
+        if not removingProduct:
+            flash("Invalid ID")
+        else:
+            db.session.delete(removingProduct)
+            db.session.commit()
+            # Refresh page
+            return redirect(url_for('inventory'))
+
+    ## BROKEN: DELETES PRODUCT RATHER THAN MAKING ORDER
+    # If the user chooses to order an item, place an order and add the data to the database
+    if orderProductForm.validate_on_submit():
+        orderedProduct = db.session.scalar(sa.select(Product).where(Product.product_id == orderProductForm.product_id.data))
+        if not orderedProduct:
+            flash("Invalid ID")
+        else:
+            # Create and add an order
+            order = Order(
+                        product_id=orderedProduct,
+                        quantity=orderProductForm.quantity,
+                        arrival_time=arrivalTime())
+            db.session.add(order)
+            # Update the on-order count of the product that's been ordered
+            db.session.update(orderedProduct).values(on_order_count=order.quantity)
+            db.session.commit()
+            # Refresh Page
+            return redirect(url_for('inventory'))
+
+    #if alertForm.validate_on_submit():
+
+
+
+    return render_template('inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm)
+
+@app.route('/management/employee_info')
+@login_required
+def employee_info():
+
+   return render_template('management/employee_info.html', title='PLACEHOLDER - Employee Information')
 
 
 

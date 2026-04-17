@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="table">
+        <table>
+            <thead>
+                <tr>
+                    <td>Product ID</td>
+                    <td>Product Name</td>
+                    <td>Quantity On Hand</td>
+                    <td>Quantity On Order</td>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    {% for column in product %}
+                        {% if not column %}
+                            <td>N/A</td>
+                        {% else %}
+                            {% if ( (column == product[2]) and (product[-1]) ) %}
+                                {% if (product[2] < product[-1]) %}
+                                    <td style="color: red;">{{ product[2] }}</td>
+                                {% else %}
+                                    <td>{{ product[2] }}</td>
+                                {% endif %}
+                            {% else%}
+                            <td>{{ column }}</td>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="inventory-buttons">
+        <div class="add-product">
+            <button onclick="openForm('add-product','add-product-button')" id="add-product-button">Add a Product</button>
+            <div class="product-popup" id="add-product">
+                <form action="" method="POST" id="add-product-form" novalidate>
+                    {{ addProductForm.hidden_tag() }}
+                <p>
+                    {{ addProductForm.product_name.label }}<br>
+                    {{ addProductForm.product_name(size=32) }}
+                </p>
+                    {% for error in addProductForm.product_name.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                <p>
+                    {{ addProductForm.on_hand_count.label }}<br>
+                    {{ addProductForm.on_hand_count(size=32) }}
+                </p>
+                    {% for error in addProductForm.on_hand_count.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                <div class="popup-buttons">
+                    <button onclick="closeForm('add-product', 'add-product-button')" type="reset">Close</button>
+                    {{ addProductForm.submit() }}
+                </div>
+                </form>
+            </div>
+        </div>
+        <div class="remove-product">
+            <button onclick="openForm('remove-product', 'remove-product-button')" id="remove-product-button">Remove a Product</button>
+            <div class="product-popup" id="remove-product">
+                <form action="" method="POST" id="remove-product-form">
+                    {{ removeProductForm.hidden_tag() }}
+                <p>
+                    {{ removeProductForm.product_id.label }}<br>
+                    {{ removeProductForm.product_id(size=32) }}
+                </p>
+                    {% for error in removeProductForm.product_id.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                <div class="popup-buttons">
+                    <button onclick="closeForm('remove-product', 'remove-product-button')" type="reset">Close</button>
+                    {{ removeProductForm.submit() }}
+                </div>
+                </form>
+            </div>
+        </div>
+        <div class="order-product">
+            <button onclick="openForm('order-product', 'order-product-button')" id="order-product-button">Order a Product</button>
+            <div class="product-popup" id="order-product">
+                <form action="" method="POST" id="order-product-form">
+                    {{ orderProductForm.hidden_tag() }}
+                <p>
+                    {{ orderProductForm.product_id.label }}<br>
+                    {{ orderProductForm.product_id(size=32) }}
+                </p>
+                    {% for error in orderProductForm.product_id.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                <p>
+                    {{ orderProductForm.quantity.label }}<br>
+                    {{ orderProductForm.quantity(size=32) }}
+                </p>
+                    {% for error in orderProductForm.quantity.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                <div class="popup-buttons">
+                    <button onclick="closeForm('order-product', 'order-product-button')" type="reset">Close</button>
+                    {{ orderProductForm.submit() }}
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+        <script>
+        function openForm(popupID, buttonID){
+            document.getElementById(popupID).style.display= "block";
+            document.getElementById(buttonID).style.display= "none";
+        }
+        function closeForm(popupID, buttonID){
+            document.getElementById(popupID).style.display= "none";
+            document.getElementById(buttonID).style.display= "block";
+        }
+    </script>
+    </div>
+
+{% endblock %}
