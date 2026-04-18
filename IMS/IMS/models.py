@@ -116,7 +116,7 @@ class Product(db.Model):
 
     # Returns a list of column descriptions
     def __repr__(self):
-        return '<Product(id={}, name={}, on_hand_count={}, on_order_count={})>'.format(self.product_id,self.name,self.on_hand_count,self.on_order_count)
+        return '<Product(id={}, name={}, on_hand_count={}, on_order_count={})>'.format(self.product_id,self.product_name,self.on_hand_count,self.on_order_count)
 
 
 #!!!IN PROGRESS!!!#

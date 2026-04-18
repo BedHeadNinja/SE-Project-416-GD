@@ -1,5 +1,6 @@
 from flask import render_template
 from IMS import app, db
+from IMS.errors import bp
 
 """                                   """
 #           Module: Errors.py           #
@@ -9,13 +10,13 @@ from IMS import app, db
 
 
 # Handles 404 errors with a custom page
-@app.errorhandler(404)
+@bp.errorhandler(404)
 def not_found_error(error):
     return render_template('errors/404.html'), 404
 
 
 # Handles 500 errors with a custom page
-@app.errorhandler(500)
+@bp.errorhandler(500)
 def internal_error(error):
     # Roll back the database session
     db.session.rollback()

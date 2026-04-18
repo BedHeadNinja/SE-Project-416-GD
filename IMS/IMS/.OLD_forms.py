@@ -1,3 +1,4 @@
+"""
 from flask_wtf import FlaskForm
 from wtforms import IntegerField, StringField, PasswordField, BooleanField, SubmitField
 from wtforms.validators import DataRequired, NumberRange
@@ -35,3 +36,4 @@ class OrderProductForm(FlaskForm):
 # Create an alert for a particular product
 class AlertForm(FlaskForm):
     product_id = IntegerField('Product ID')
+"""

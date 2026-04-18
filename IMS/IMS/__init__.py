@@ -20,5 +20,21 @@ migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'loginID'
 
-# Import routes, models and errors
-from IMS import routes, models, errors
+# Create errors blueprint
+from IMS.errors import bp as errors_bp
+app.register_blueprint(errors_bp)
+
+# Create auth blueprint
+from IMS.auth import bp as auth_bp
+app.register_blueprint(auth_bp, url_prifix='/auth')
+
+# Create inventory blueprint
+from IMS.inventory import bp as inventory_bp
+app.register_blueprint(inventory_bp, url_prefix='/inventory')
+
+# Creat main blueprint
+from IMS.main import bp as main_bp
+app.register_blueprint(main_bp)
+
+# Import routes, models and #!REMOVED! errors
+#from IMS import routes, models

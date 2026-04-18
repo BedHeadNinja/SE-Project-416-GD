@@ -16,17 +16,17 @@
                     Inventory Management System
                 </div>
                 <div class="navbar">
-                    <a href="{{ url_for('index') }}">Home</a>
-                    <a href="{{ url_for('inventory') }}">Inventory</a>
-                    <a href="{{ url_for('employee_info') }}">Employee Info</a>
+                    <a href="{{ url_for('main.index') }}">Home</a>
+                    <a href="{{ url_for('inventory.inventory') }}">Inventory</a>
+                    <a href="{{ url_for('inventory.employee_info') }}">Employee Info</a>
                 </div>
             </header>
             <div class="right-section">
                 <div>
                     {% if current_user.is_anonymous %}
-                    <a href="{{ url_for('loginID') }}">Log in</a>
+                    <a href="{{ url_for('auth.loginID') }}">Log in</a>
                     {% else %}
-                    <a href="{{ url_for('logout') }}">Log out</a>
+                    <a href="{{ url_for('auth.logout') }}">Log out</a>
                     {% endif %}
                 </div>
             </div>

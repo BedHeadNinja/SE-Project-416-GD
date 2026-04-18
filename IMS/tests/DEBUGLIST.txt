@@ -1,0 +1,4 @@
+----- LIST OF THINGS TO DEBUG ----
+            FUNCTIONS:
+    Remove a Product
+        ERROR: Cannot handle improper data, must be fixed!
