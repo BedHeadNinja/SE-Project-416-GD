@@ -17,6 +17,7 @@ from IMS.auth.forms import IDForm, PasswordForm
 #   is no password associated with the given valid ID.
 #
 """
+
 @bp.route('/ID', methods=['GET','POST'])
 def loginID():
     # If the user is already logged in, redirect to index
@@ -55,6 +56,7 @@ def loginID():
 # - Redirects the user to index if the password exists
 #
 """
+
 @bp.route('/password',methods=['GET','POST'])
 def loginPassword():
 
@@ -88,4 +90,3 @@ def logout():
     # Use Flask-Login to log out the user, and return to index
     logout_user()
     return redirect(url_for('auth.loginID'))
-

@@ -4,10 +4,14 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 
+# Define extension objects
+# db: SQLAlchemy. Handles database
 db = SQLAlchemy()
+# migrate: flask-migrate. Handles database migrations
 migrate = Migrate()
+# login: flask-login. Handles login features like remember me. Functions with RBAC
 login = LoginManager()
-login.login_view = 'auth.login'
+login.login_view = 'auth.loginID'
 
 def create_app(config_class=Config):
     # Create flask object
@@ -15,8 +19,9 @@ def create_app(config_class=Config):
     # Use configuration file
     app.config.from_object(config_class)
 
+    # Initialize extension objects
     db.init_app(app)
-    migrate.init_app(app)
+    migrate.init_app(app, db)
     login.init_app(app)
 
     # Create errors blueprint
