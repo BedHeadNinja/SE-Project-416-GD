@@ -4,37 +4,56 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 
-# Create flask object
-app = Flask(__name__)
+db = SQLAlchemy()
+migrate = Migrate()
+login = LoginManager()
+login.login_view = 'auth.login'
 
-# Use configuration file config.py
-app.config.from_object(Config)
+def create_app(config_class=Config):
+    # Create flask object
+    app = Flask(__name__)
+    # Use configuration file
+    app.config.from_object(config_class)
 
-#Create database object
-db = SQLAlchemy(app)
+    db.init_app(app)
+    migrate.init_app(app)
+    login.init_app(app)
 
-# Create database migration object
-migrate = Migrate(app, db)
+    # Create errors blueprint
+    from IMS.errors import bp as errors_bp
+    app.register_blueprint(errors_bp)
 
-# Create login manager object, and set loginID as the view function that handles logins
-login = LoginManager(app)
-login.login_view = 'loginID'
+    # Create auth blueprint
+    from IMS.auth import bp as auth_bp
+    app.register_blueprint(auth_bp, url_prifix='/auth')
 
-# Create errors blueprint
-from IMS.errors import bp as errors_bp
-app.register_blueprint(errors_bp)
+    # Create inventory blueprint
+    from IMS.inventory import bp as inventory_bp
+    app.register_blueprint(inventory_bp, url_prefix='/inventory')
 
-# Create auth blueprint
-from IMS.auth import bp as auth_bp
-app.register_blueprint(auth_bp, url_prifix='/auth')
+    # Creat main blueprint
+    from IMS.main import bp as main_bp
+    app.register_blueprint(main_bp)
 
-# Create inventory blueprint
-from IMS.inventory import bp as inventory_bp
-app.register_blueprint(inventory_bp, url_prefix='/inventory')
-
-# Creat main blueprint
-from IMS.main import bp as main_bp
-app.register_blueprint(main_bp)
+    return app
 
 # Import routes, models and #!REMOVED! errors
 #from IMS import routes, models
+
+# Create flask object
+#app = Flask(__name__)
+
+# Use configuration file config.py
+#app.config.from_object(Config)
+
+#Create database object
+#db = SQLAlchemy(app)
+
+# Create database migration object
+#migrate = Migrate(app, db)
+
+# Create login manager object, and set loginID as the view function that handles logins
+#login = LoginManager(app)
+#login.login_view = 'loginID'
+
+##

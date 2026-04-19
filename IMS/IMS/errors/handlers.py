@@ -1,5 +1,5 @@
-from flask import render_template
-from IMS import app, db
+from flask import current_app, render_template
+from IMS import db
 from IMS.errors import bp
 
 """                                   """

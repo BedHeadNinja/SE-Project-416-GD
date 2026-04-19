@@ -1,9 +1,9 @@
-from flask import render_template, flash, redirect, url_for, session
+from flask import current_app, render_template, flash, redirect, url_for, session
 from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
 
 #! Local Imports !#
-from IMS import app, db
+from IMS import db
 from IMS.auth import bp
 from IMS.models import User
 from IMS.auth.forms import IDForm, PasswordForm
