@@ -51,6 +51,7 @@ class User(UserMixin, db.Model):
     name: so.Mapped[str] = so.mapped_column(sa.String(64), unique=False)
     # PASSWORD_HASH: Hashed for security
     password_hash: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
+    role: so.Mapped[str] = so.mapped_column(sa.String(20), default='employee', nullable=False)
 
     """
     #               Function - set_password
