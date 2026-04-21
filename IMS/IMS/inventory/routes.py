@@ -110,6 +110,12 @@ def employee_info():
 
     #Pull user data from database
     users = db.session.query(User.__table__).all()
+    user = db.session.scalar(
+            sa.select(User).where(User.id == session['user_id']))
+
+    if user.role != 'Manager':
+        flash("You do not have access to this page!")
+        return redirect('/index')
 
     addEmployeeForm = AddEmployeeForm()
 

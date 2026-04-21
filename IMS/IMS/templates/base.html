@@ -1,6 +1,8 @@
 <!doctype html>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='addTable.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='UI.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
 <html>
     <head>
         {% if title %}
@@ -12,33 +14,38 @@
 
     <body>
         <div class="header">
-            <header class="left-section">
-                <div class="logo">
-                    Inventory Management System
-                </div>
+            <div class="left-section">
+                <button onclick="window.location.href='{{ url_for('main.index') }}'" class="logo" >IMS Pro</button>
                 <div class="navbar">
-                    <a href="{{ url_for('main.index') }}">Home</a>
-                    <a href="{{ url_for('inventory.inventory') }}">Inventory</a>
-                    <a href="{{ url_for('inventory.employee_info') }}">Employee Info</a>
+                    
                 </div>
-            </header>
+            </div>
             <div class="right-section">
-                <div>
+                
+                <button class="cart-button" onclick="dropdownHandle()"> Menu </button>
+                
+            </div>
+        </div>
+
+        <div class= "dropdown-content" id="dropdown-content">
+                <a href="{{ url_for('main.index') }}">Home</a> <br>
+                <a href="{{ url_for('inventory.inventory') }}">Inventory</a><br>
+                <a href="{{ url_for('inventory.employee_info') }}">Employee Info</a><br>
                     {% if current_user.is_anonymous %}
                     <a href="{{ url_for('auth.loginID') }}">Log in</a>
                     {% else %}
                     <a href="{{ url_for('auth.logout') }}">Log out</a>
                     {% endif %}
                 </div>
-            </div>
-        </div>
+
+        
         <div class="body-class">
             <hr>
             {% with messages = get_flashed_messages() %}
             {% if messages %}
             <ul>
                 {% for message in messages %}
-                <li>{{ message }}</li>
+                <li> {{ message }}</li>
                 {% endfor %}
             </ul>
             {% endif %}
@@ -46,4 +53,5 @@
             {% block content %}{% endblock %}
         </div>
     </body>
+    <script src = "{{ url_for('static', filename='jsFile/main.js') }}"> </script>
 </html>

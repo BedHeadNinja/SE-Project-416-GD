@@ -2,7 +2,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="login-box">
+    <div class="login-class">
+        <div class="login-outline">
         <h1>Login</h1>
             <form action="" method="POST" novalidate>
             {{ form.hidden_tag() }}
@@ -11,5 +12,6 @@
             </p>
             <p>{{ form.submit() }}</p>
         </form>
+        </div>
     </div>
 {% endblock %}

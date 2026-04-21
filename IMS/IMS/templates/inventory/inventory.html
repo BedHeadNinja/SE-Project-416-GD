@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="table">
+    <div class="tableCSS">
         <table>
             <thead>
                 <tr>
@@ -9,6 +9,7 @@
                     <td>Product Name</td>
                     <td>Quantity On Hand</td>
                     <td>Quantity On Order</td>
+                    <td>Warning Threshold</td>
                 </tr>
             </thead>
             <tbody>
@@ -34,10 +35,11 @@
             </tbody>
         </table>
     </div>
+    <br>
     <div class="inventory-buttons">
         <div class="add-product">
             <button onclick="openForm('add-product','add-product-button')" id="add-product-button">Add a Product</button>
-            <div class="product-popup" id="add-product">
+            <div class="product-popup" id="add-product"> 
                 <form action="{{ url_for('inventory.add_product') }}" method="POST" id="add-product-form" novalidate>
                     {{ addProductForm.hidden_tag() }}
                 <p>
@@ -60,7 +62,7 @@
                 </div>
                 </form>
             </div>
-        </div>
+        </div> 
         <div class="remove-product">
             <button onclick="openForm('remove-product', 'remove-product-button')" id="remove-product-button">Remove a Product</button>
             <div class="product-popup" id="remove-product">
@@ -79,7 +81,7 @@
                 </div>
                 </form>
             </div>
-        </div>
+        </div> 
         <div class="order-product">
             <button onclick="openForm('order-product', 'order-product-button')" id="order-product-button">Order a Product</button>
             <div class="product-popup" id="order-product">
