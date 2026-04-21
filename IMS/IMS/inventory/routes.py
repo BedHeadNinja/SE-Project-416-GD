@@ -113,7 +113,7 @@ def employee_info():
     user = db.session.scalar(
             sa.select(User).where(User.id == session['user_id']))
 
-    if user.role != 'Manager':
+    if user.role != 'Manager'and user.role != 'manager':
         flash("You do not have access to this page!")
         return redirect('/index')
 
