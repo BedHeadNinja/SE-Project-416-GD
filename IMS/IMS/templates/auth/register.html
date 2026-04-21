@@ -1,0 +1,19 @@
+<!doctype html>
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="login-box">
+        <h1>Register Password</h1>
+            <form action="" method="POST" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.password.label }}<br>
+            {{ form.password(size=32) }}
+            {% for error in form.password.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            </p>
+            <p>{{ form.submit() }}</p>
+        </form>
+    </div>
+{% endblock %}

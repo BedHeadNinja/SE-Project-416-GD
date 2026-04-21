@@ -1,0 +1,57 @@
+    .body-class {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 50vh;
+      margin: 0;
+      padding-bottom: 20px;
+    }
+
+    .login-claas {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .Enter-button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .employeeID {
+      font-size: 28px;
+      margin-left: 3px;
+    }
+
+    .login-outline {
+      border: 2px solid black;
+      padding: 20px;
+      border-radius: 10px;
+      width: 300px;
+      height: 40px;
+      font-size: 20px;
+    }
+
+    .placeholder {
+      color: black;
+      font-size: 23.8px;
+      padding-top: 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .Enter-button {
+      margin-top: 10px;
+    }
+
+    .enter {
+      font-size: 15px;
+      padding: 7px 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }

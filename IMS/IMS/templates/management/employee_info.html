@@ -1,9 +1,61 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div >
-    <form action=>
-        <input type="text" placeholder="Search.." name="search">
-        <button type="submit"><i></i></button>
-</div>
+<div>
+    <div class="tableCSS">
+      <table>
+        <button class="js-addButton" onclick="openaddElement(); ('add-employee','add-employee-button');" id="add-employee-button">+</button>
+        <br>
+        <thead>
+          <th>Employee Name</th>
+          <th>ID</th>
+          <th>Role</th>
+        </thead>
+        <tbody>
+                {% for user in users %}
+                <tr>
+                    <td> {{user.name}}</td>
+                    <td> {{user.id}}</td>
+                    <td> {{user.role}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+      </table>
+    </div>
+
+    <div class="addElementForm" id="add-employee">
+      <h2>Add Employee</h2>
+      <button class="x-button" onclick="closeForm('add-employee', 'add-employee-button'); openaddElement()">x</button>
+
+      <form action="{{ url_for('inventory.add_employee') }}" method="POST" id="add-employee-form" novalidate>
+                    {{ addEmployeeForm.hidden_tag() }}
+                <p>
+                    {{ addEmployeeForm.name.label }}<br>
+                    {{ addEmployeeForm.name(size=32) }}
+                </p>
+                    {% for error in addEmployeeForm.name.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                <p>
+                    {{ addEmployeeForm.id.label}} <br>
+                    {{addEmployeeForm.id}}
+                </p>
+                    {% for error in addEmployeeForm.id.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                <p>
+                    {{ addEmployeeForm.role.label}} <br>
+                    {{ addEmployeeForm.role}}
+                </p>
+                    {% for error in addEmployeeForm.role.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}  
+                
+                <div class="popup-buttons">
+                    <button onclick="closeForm('add-employee', 'add-employee-button')" type="reset">Close</button>
+                    {{ addEmployeeForm.submit() }}
+                </div>
+                </form>
+    </div>
+    <script src="{{ url_for('static', filename='jsFile/manager_employee.js') }}"> </script>
 {% endblock %}

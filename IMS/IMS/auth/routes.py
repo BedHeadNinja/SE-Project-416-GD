@@ -6,7 +6,7 @@ import sqlalchemy as sa
 from IMS import db
 from IMS.auth import bp
 from IMS.models import User
-from IMS.auth.forms import IDForm, PasswordForm
+from IMS.auth.forms import IDForm, PasswordForm, RegisterForm
 
 """
 #               Function: loginID
@@ -36,13 +36,16 @@ def loginID():
         # Search the database for id matching the user's input
         user = db.session.scalar(
             sa.select(User).where(User.id == user_input['id']))
-        # If password isn't found, print an error message and repeat page
+        # If user isn't found, print an error message and repeat page
         if user is None:
             flash('Invalid ID')
             return redirect(url_for('auth.loginID'))
         else:
-            # Set the user's id as a session value
             session['user_id'] = user_input['id']
+            
+            if user.password_hash is None:
+                return redirect(url_for('auth.registerPassword'))
+            # Set the user's id as a session value
             return redirect(url_for('auth.loginPassword'))
 
     return render_template('/auth/ID.html',title='Login', form=form)
@@ -79,6 +82,28 @@ def loginPassword():
             return redirect(url_for('main.index'))
 
     return render_template('/auth/password.html', title='Login', form=form)
+
+@bp.route('/register', methods = ['GET', 'POST'])
+def registerPassword():
+
+    user = db.session.scalar(
+        sa.select(User).where(User.id == session.get('user_id')))
+    
+    form = RegisterForm()
+
+    if form.validate_on_submit():
+        newPass = form.password.data
+
+        user.set_password(newPass)
+
+        db.session.merge(user)
+        db.session.commit()
+
+        return redirect('ID')
+    
+    return render_template('/auth/register.html',title='Login', form=form)
+
+
 
 
 """

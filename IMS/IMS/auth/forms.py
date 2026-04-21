@@ -14,3 +14,7 @@ class IDForm(LoginForm):
 # Password form
 class PasswordForm(LoginForm):
     password = PasswordField('Password', validators=[DataRequired()])
+
+class RegisterForm(LoginForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    submit = SubmitField('Register')

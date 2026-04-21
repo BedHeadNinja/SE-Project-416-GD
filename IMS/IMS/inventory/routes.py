@@ -4,9 +4,9 @@ import sqlalchemy as sa
 
 #! Local Imports!#
 from IMS import db
-from IMS.models import Product, Order
+from IMS.models import Product, Order, User
 from IMS.inventory import bp
-from IMS.inventory.forms import AddProductForm, RemoveProductForm, OrderProductForm
+from IMS.inventory.forms import AddProductForm, RemoveProductForm, OrderProductForm, AddEmployeeForm
 
 #!!!!! TEMP - REPLACE WITH arrivalTime() BLACKBOX FUNCTION !!!!!
 from datetime import datetime, timezone
@@ -108,4 +108,24 @@ def order_product():
 @login_required
 def employee_info():
 
-   return render_template('management/employee_info.html', title='PLACEHOLDER - Employee Information')
+    #Pull user data from database
+    users = db.session.query(User.__table__).all()
+
+    addEmployeeForm = AddEmployeeForm()
+
+    return render_template('management/employee_info.html', users = users, title='PLACEHOLDER - Employee Information', addEmployeeForm = addEmployeeForm)
+
+@bp.route('/management/add_employee', methods=['POST'])
+def add_employee():
+
+    addEmployeeForm = AddEmployeeForm()
+
+    if addEmployeeForm.validate_on_submit():
+        newUser = User(id = addEmployeeForm.id.data, name = addEmployeeForm.name.data, role = addEmployeeForm.role.data)
+
+        db.session.add(newUser)
+        db.session.commit()
+        # Refresh page
+        return redirect(url_for('inventory.employee_info'))
+    
+    return render_template('management/employee_info.html', users = users, title='PLACEHOLDER - Employee Information', addEmployeeForm = addEmployeeForm)
