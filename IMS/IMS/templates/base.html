@@ -30,7 +30,7 @@
         <div class= "dropdown-content" id="dropdown-content">
                 <a href="{{ url_for('main.index') }}">Home</a> <br>
                 <a href="{{ url_for('inventory.inventory') }}">Inventory</a><br>
-                <a href="{{ url_for('inventory.employee_info') }}">Employee Info</a><br>
+                <a href="{{ url_for('management.employee_info') }}">Employee Info</a><br>
                     {% if current_user.is_anonymous %}
                     <a href="{{ url_for('auth.loginID') }}">Log in</a>
                     {% else %}

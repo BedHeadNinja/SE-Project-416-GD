@@ -29,9 +29,12 @@ def inventory():
 
     return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm)
 
+
 @bp.route('/add_product', methods=['GET','POST'])
 @login_required
 def add_product():
+    #Pull product data from database
+    products = db.session.query(Product.__table__).all()
 
     # Create form objects
     addProductForm = AddProductForm()
@@ -52,6 +55,8 @@ def add_product():
 @bp.route('/remove_product', methods=['GET','POST'])
 @login_required
 def remove_product():
+    #Pull product data from database
+    products = db.session.query(Product.__table__).all()
 
     # Create form objects
     addProductForm = AddProductForm()
@@ -77,6 +82,8 @@ def remove_product():
 @bp.route('/order_product', methods=['GET','POST'])
 @login_required
 def order_product():
+    #Pull product data from database
+    products = db.session.query(Product.__table__).all()
 
     # Create form objects
     addProductForm = AddProductForm()
@@ -104,6 +111,7 @@ def order_product():
 
     return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm)
 
+"""
 @bp.route('/management/employee_info')
 @login_required
 def employee_info():
@@ -135,3 +143,4 @@ def add_employee():
         return redirect(url_for('inventory.employee_info'))
     
     return render_template('management/employee_info.html', users = users, title='PLACEHOLDER - Employee Information', addEmployeeForm = addEmployeeForm)
+"""
