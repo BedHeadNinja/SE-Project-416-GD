@@ -2,10 +2,46 @@
 
 {% block content %}
 <div>
+    <div class="body-header">
+      <div class="employee">
+        <p style="font-size:13px;margin-bottom:4px;color: #3b2f2f;">Manager Portal</p>
+        <h1 class="page-title" style="font-size:24px;font-weight:500;color: #3b2f2f;">Employee Management</h1>
+      </div>
+        <button class="addButton" onclick="openaddElement(); ('add-employee','add-employee-button');" id="add-employee-button">+ Add Employee</button>
+    </div>
+
+    <div class="grid-middle">
+      <div class="box">
+        <div class="employee-logo">
+          <img src="{{ url_for('static', filename='image/employee.png') }}" alt="Employee Icon" style="width: 35px; height: 35px;">
+        </div>
+        <div>
+          <p style="font-size: 17px;">Total Employees</p>
+          <p><strong>1</strong></p>
+        </div>
+      </div>
+      <div class="box">
+        <div class="employee-logo">
+          <img src="{{ url_for('static', filename='image/ticked.png') }}" alt="Employee Icon" style="width: 35px; height: 35px;">
+        </div>
+        <div>
+          <p style="font-size: 17px;">Active Employee</p>
+          <p><strong>1</strong></p>
+        </div>
+      </div>
+      <div class="box">
+        <div class="employee-logo">
+          <img src="{{ url_for('static', filename='image/unchecked.png') }}" alt="Employee Icon" style="width: 35px; height: 35px;">
+        </div>
+        <div>
+          <p style="font-size: 17px;">Inactive Employee</p>
+          <p><strong>0</strong></p>
+        </div>
+      </div>
+    </div>
+    
     <div class="tableCSS">
       <table>
-        <button class="js-addButton" onclick="openaddElement(); ('add-employee','add-employee-button');" id="add-employee-button">+</button>
-        <br>
         <thead>
           <th>Employee Name</th>
           <th>ID</th>
