@@ -1,10 +1,11 @@
+/*create a function to open the add employee form */
 function openaddElement() {
   document.getElementById("form").style.display = "block";
 }
 function closeForm() {
   document.getElementById("form").style.display = "none";
 }
-
+/*create a function to add an employee */
 function addEmployee() {
   let employeeName = document.getElementById("name").value;
   let employeeId = document.getElementById("id").value;
