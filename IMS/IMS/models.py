@@ -107,7 +107,7 @@ class Product(db.Model):
     # Sets default values on object creation
     # NOTE: This is required to prevent errors. Both product id and on_order_count will, with
     #       the current configuration, never be sent a value as an argument, and would therefore otherwise be null - very bad!
-    def __init_(self, **kwargs):
+    def __init__(self, **kwargs):
         # !!OUTDATED!! If no product id is sent, generate one (will always execute)
         #if 'product_id' not in kwargs:
         #    kwargs['product_id'] = uuid4()
