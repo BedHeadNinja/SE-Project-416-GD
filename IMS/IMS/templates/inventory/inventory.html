@@ -1,16 +1,52 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <div class="body-css">
+    <div class="body-header">
+      <div class="employee">
+        <p style="font-size:13px;margin-bottom:4px;color: #3b2f2f;">Employee Portal</p>
+        <h1 class="page-title" style="font-size:24px;font-weight:500;color: #3b2f2f;">Product Directory</h1>
+      </div>
+    </div>
+    <div class="grid-middle">
+      <div class="box">
+        <div class="employee-logo">
+          <img src="{{ url_for('static', filename='/image/product.png') }}" alt="Employee Icon" style="width: 35px; height: 35px;">
+        </div>
+        <div>
+          <p style="font-size: 17px;">Total Products</p>
+          <p><strong>{{ productStats[0] }}</strong></p>
+        </div>
+      </div>
+      <div class="box">
+        <div class="employee-logo">
+          <img src="{{ url_for('static', filename='/image/low_stock.png') }}" alt="Employee Icon" style="width: 35px; height: 35px;">
+        </div>
+        <div>
+          <p style="font-size: 17px;">Low Stock</p>
+          <p><strong>{{ productStats[1] }}</strong></p>
+        </div>
+      </div>
+      <div class="box">
+        <div class="employee-logo">
+          <img src="{{ url_for('static', filename='/image/expiring.png') }}" alt="Employee Icon" style="width: 35px; height: 35px;">
+        </div>
+        <div>
+          <p style="font-size: 17px;">Expiring Soon</p>
+          <p><strong>{{ productStats[2] }}</strong></p>
+        </div>
+      </div>
+    </div>
     <div class="tableCSS">
         <table>
             <thead>
-                <tr>
-                    <td>Product ID</td>
-                    <td>Product Name</td>
-                    <td>Quantity On Hand</td>
-                    <td>Quantity On Order</td>
-                    <td>Warning Threshold</td>
-                </tr>
+                
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Quantity On Hand</th>
+                <th>Quantity On Order</th>
+                <th>Warning Threshold</th>
+                
             </thead>
             <tbody>
                 {% for product in products %}
@@ -38,7 +74,7 @@
     <br>
     <div class="inventory-buttons">
         <div class="add-product">
-            <button onclick="openForm('add-product','add-product-button')" id="add-product-button">Add a Product</button>
+            <button class="enter" onclick="openForm('add-product','add-product-button')" id="add-product-button">Add a Product</button>
             <div class="product-popup" id="add-product"> 
                 <form action="{{ url_for('inventory.add_product') }}" method="POST" id="add-product-form" novalidate>
                     {{ addProductForm.hidden_tag() }}
@@ -46,16 +82,12 @@
                     {{ addProductForm.product_name.label }}<br>
                     {{ addProductForm.product_name(size=32) }}
                 </p>
-                    {% for error in addProductForm.product_name.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
+                    
                 <p>
                     {{ addProductForm.on_hand_count.label }}<br>
                     {{ addProductForm.on_hand_count(size=32) }}
                 </p>
-                    {% for error in addProductForm.on_hand_count.errors %}
-                        <span style="color: red;">[{{ error }}]</span>
-                    {% endfor %}
+                    
                 <div class="popup-buttons">
                     <button onclick="closeForm('add-product', 'add-product-button')" type="reset">Close</button>
                     {{ addProductForm.submit() }}
@@ -64,7 +96,7 @@
             </div>
         </div> 
         <div class="remove-product">
-            <button onclick="openForm('remove-product', 'remove-product-button')" id="remove-product-button">Remove a Product</button>
+            <button class="enter" onclick="openForm('remove-product', 'remove-product-button')" id="remove-product-button">Remove a Product</button>
             <div class="product-popup" id="remove-product">
                 <form action="{{ url_for('inventory.remove_product') }}" method="POST" id="remove-product-form">
                     {{ removeProductForm.hidden_tag() }}
@@ -83,7 +115,7 @@
             </div>
         </div> 
         <div class="order-product">
-            <button onclick="openForm('order-product', 'order-product-button')" id="order-product-button">Order a Product</button>
+            <button class="enter" onclick="openForm('order-product', 'order-product-button')" id="order-product-button">Order a Product</button>
             <div class="product-popup" id="order-product">
                 <form action="{{ url_for('inventory.order_product') }}" method="POST" id="order-product-form">
                     {{ orderProductForm.hidden_tag() }}
@@ -108,6 +140,7 @@
                 </form>
             </div>
         </div>
+    </div>
     </div>
         <script>
         function openForm(popupID, buttonID){

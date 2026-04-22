@@ -2,15 +2,18 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="login-class">
-        <div class="login-outline">
-        <h1>Login</h1>
-            <form action="" method="POST" novalidate>
+    <div class="body-class">
+        <div>
+            <h1 class="employeeID">Login</h1>
+        </div>
+        <div class="login-class">
+            <form class="login-outline" action="" method="POST" novalidate>
             {{ form.hidden_tag() }}
-            <p>
+            
                 {% block loginField %}{% endblock %}
-            </p>
-            <p>{{ form.submit() }}</p>
+            <br><br>
+            <p>{{ form.submit(class="enter") }}</p>
+            
         </form>
         </div>
     </div>

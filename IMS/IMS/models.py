@@ -102,7 +102,7 @@ class Product(db.Model):
     # PRODUCT ON ORDER
     on_order_count: so.Mapped[int] = so.mapped_column(default=0)
     # STOCK ALERT MINIMUM - The lowest stock quantity reached before an alert is raised. Null by default
-    stock_alert_minimum: so.Mapped[int] = so.mapped_column(nullable=True)
+    stock_alert_minimum: so.Mapped[int] = so.mapped_column(default=0, nullable=False)
 
     # Sets default values on object creation
     # NOTE: This is required to prevent errors. Both product id and on_order_count will, with
@@ -118,7 +118,7 @@ class Product(db.Model):
 
     # Returns a list of column descriptions
     def __repr__(self):
-        return '<Product(id={}, name={}, on_hand_count={}, on_order_count={})>'.format(self.product_id,self.product_name,self.on_hand_count,self.on_order_count)
+        return '<Product(id={}, name={}, on_hand_count={}, on_order_count={}, stock_alert_minimum={})>'.format(self.product_id,self.product_name,self.on_hand_count,self.on_order_count,self.stock_alert_minimum)
 
 
 #!!!IN PROGRESS!!!#

@@ -27,7 +27,15 @@ def inventory():
     removeProductForm = RemoveProductForm()
     orderProductForm = OrderProductForm()
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm)
+    productStats = [len(products), 0, 0]
+
+    for product in products:
+        if (product.on_hand_count + product.on_order_count <= product.stock_alert_minimum):
+            productStats[1] += 1
+        elif (product.on_hand_count + product.on_order_count <= product.stock_alert_minimum + 50):
+            productStats[2] += 1
+
+    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, productStats=productStats, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm)
 
 
 @bp.route('/add_product', methods=['GET','POST'])
@@ -38,18 +46,16 @@ def add_product():
 
     # Create form objects
     addProductForm = AddProductForm()
-    removeProductForm = RemoveProductForm()
-    orderProductForm = OrderProductForm()
 
     # If the user chooses to add a product, add its values to the database
     if addProductForm.validate_on_submit():
-        newProduct = Product(product_name=addProductForm.product_name.data, on_hand_count=addProductForm.on_hand_count.data)
+        newProduct = Product(product_name=addProductForm.product_name.data, on_hand_count=addProductForm.on_hand_count.data, stock_alert_minimum=0)
         db.session.add(newProduct)
         db.session.commit()
         # Refresh page
         return redirect(url_for('inventory.inventory'))
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm)
+    return redirect(url_for('inventory.inventory'))
 
 
 @bp.route('/remove_product', methods=['GET','POST'])
@@ -86,8 +92,6 @@ def order_product():
     products = db.session.query(Product.__table__).all()
 
     # Create form objects
-    addProductForm = AddProductForm()
-    removeProductForm = RemoveProductForm()
     orderProductForm = OrderProductForm()
 
     #If the user chooses to order an item, place an order and add the data to the database
@@ -109,7 +113,7 @@ def order_product():
             return redirect(url_for('inventory.inventory'))
 
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm)
+    return redirect(url_for('inventory.inventory'))
 
 """
 @bp.route('/management/employee_info')

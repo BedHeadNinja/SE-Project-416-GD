@@ -2,19 +2,22 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <div class="login-class">
-        <div class="login-outline">
-        <h1>Register Password</h1>
-            <form action="" method="POST" novalidate>
+    <div class="body-class">
+        <div>
+            <h1 class="employeeID">Register Password</h1>
+        </div>
+        <div class="login-class">
+    
+            <form class="login-outline" action="" method="POST" novalidate>
             {{ form.hidden_tag() }}
-            <p>
+            
                 {{ form.password.label }}<br>
-            {{ form.password(size=32) }}
+            {{ form.password(class="placeholder") }}
             {% for error in form.password.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
-            </p>
-            <p>{{ form.submit() }}</p>
+             <br><br>
+            <p>{{ form.submit(class="enter") }}</p>
         </form>
     </div>
     </div>

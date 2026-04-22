@@ -1,14 +1,18 @@
     .body-class {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      height: 50vh;
-      margin: 0;
-      padding-bottom: 20px;
+      background: #ffffff;
+      border: 1px solid #e0ddd6;
+      border-radius: 16px;
+      padding: 48px 44px;
+      width: 100%;
+      max-width: 380px;
+      box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+      text-align: center;
+      margin-top:50px;
+      padding-bottom: 100px;
+      height:151px;
     }
 
-    .login-claas {
+    .login-class {
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -27,23 +31,22 @@
     }
 
     .login-outline {
-      border: 2px solid black;
+      border: 1px solid #e0ddd6;
       padding: 20px;
       border-radius: 10px;
-      width: flex;
-      height: flex;
+      width: 300px;
+      height: 55px;
       font-size: 20px;
-      justify-content: center;
     }
 
     .placeholder {
       color: black;
-      font-size: 23.8px;
+     font-size: 23.8px;
       padding-top: 4px;
       display: flex;
       justify-content: center;
       align-items: center;
-    }
+    }   
 
     .Enter-button {
       margin-top: 10px;

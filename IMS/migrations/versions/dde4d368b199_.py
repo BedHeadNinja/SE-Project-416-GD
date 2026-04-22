@@ -36,7 +36,7 @@ def upgrade():
     sa.Column('product_name', sa.String(length=64), nullable=False),
     sa.Column('on_hand_count', sa.Integer(), nullable=False),
     sa.Column('on_order_count', sa.Integer(), nullable=False),
-    sa.Column('stock_alert_minimum', sa.Integer(), nullable=True),
+    sa.Column('stock_alert_minimum', sa.Integer(), default=0, nullable=False),
     sa.PrimaryKeyConstraint('product_id'),
     sa.UniqueConstraint('product_id')
     )

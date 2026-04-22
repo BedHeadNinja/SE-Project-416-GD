@@ -154,6 +154,7 @@ tbody td {
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
   margin-bottom: 20px;
   height: 100px;
+  width:250px;
 }
 .employee-logo {
   display: flex;
@@ -172,6 +173,7 @@ tbody td {
   margin-bottom: 20px;
 }
 .body-css {
+  align-items: center;
   max-width: 960px;
   margin: 20px auto;
   padding: 0 24px;
@@ -193,4 +195,17 @@ tbody td {
   transition: all 0.18s;
   background-color: #f3f0e9;
   border-radius: 10px;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonArea {
+  display: flex;
+  justify-content: right;
+  gap: 8px;
 }
