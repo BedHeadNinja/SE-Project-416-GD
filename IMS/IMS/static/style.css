@@ -52,6 +52,7 @@ body {
   display: flex;
   flex-direction: row;
 }
+.quantities
 .order-product-form{
   display: flex;
   flex-direction: column;

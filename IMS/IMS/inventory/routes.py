@@ -6,7 +6,7 @@ import sqlalchemy as sa
 from IMS import db
 from IMS.models import Product, Order, User
 from IMS.inventory import bp
-from IMS.inventory.forms import AddProductForm, RemoveProductForm, OrderProductForm, UpdateQuantityForm, AddEmployeeForm
+from IMS.inventory.forms import AddProductForm, RemoveProductForm, UpdateQuantityForm
 
 #!!!!! TEMP - REPLACE WITH arrivalTime() BLACKBOX FUNCTION !!!!!
 from datetime import datetime, timezone
@@ -16,7 +16,7 @@ from datetime import datetime, timezone
 #   Handles displaying and managing inventory
 #   !!INCOMPLETE!!
 """
-@bp.route('/inventory', methods=['GET','POST'])
+@bp.route('/', methods=['GET','POST'])
 @login_required
 def inventory():
     # Pull product data from database
@@ -25,10 +25,9 @@ def inventory():
     # Create form objects
     addProductForm = AddProductForm()
     removeProductForm = RemoveProductForm()
-    orderProductForm = OrderProductForm()
     updateQuantityForm = UpdateQuantityForm()
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm, updateQuantityForm=updateQuantityForm)
+    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, updateQuantityForm=updateQuantityForm)
 
 
 @bp.route('/add_product', methods=['GET','POST'])
@@ -40,18 +39,20 @@ def add_product():
     # Create form objects
     addProductForm = AddProductForm()
     removeProductForm = RemoveProductForm()
-    orderProductForm = OrderProductForm()
     updateQuantityForm = UpdateQuantityForm()
 
     # If the user chooses to add a product, add its values to the database
     if addProductForm.validate_on_submit():
         newProduct = Product(product_name=addProductForm.product_name.data, on_hand_count=addProductForm.on_hand_count.data)
-        db.session.add(newProduct)
-        db.session.commit()
-        # Refresh page
-        return redirect(url_for('inventory.inventory'))
+        if not newProduct:
+            flash("ERROR: Invalid ID")
+        else:
+            db.session.add(newProduct)
+            db.session.commit()
+            # Refresh page
+            return redirect(url_for('inventory.inventory'))
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm, updateQuantityForm=updateQuantityForm)
+    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, updateQuantityForm=updateQuantityForm)
 
 
 @bp.route('/remove_product', methods=['GET','POST'])
@@ -63,12 +64,10 @@ def remove_product():
     # Create form objects
     addProductForm = AddProductForm()
     removeProductForm = RemoveProductForm()
-    orderProductForm = OrderProductForm()
     updateQuantityForm = UpdateQuantityForm()
 
     # If the user chooses to remove a product, delete it from the database
     if removeProductForm.validate_on_submit():
-        #print("Here's the problem")
         removingProduct = db.session.scalar(sa.select(Product).where(Product.product_id == removeProductForm.product_id.data))
         # If no matching product id is found, return an error message
         if not removingProduct:
@@ -80,7 +79,7 @@ def remove_product():
             return redirect(url_for('inventory.inventory'))
 
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm, updateQuantityForm=updateQuantityForm)
+    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, updateQuantityForm=updateQuantityForm)
 
 @bp.route('/order_product', methods=['GET','POST'])
 @login_required
@@ -91,46 +90,31 @@ def order_product():
     # Create form objects
     addProductForm = AddProductForm()
     removeProductForm = RemoveProductForm()
-    orderProductForm = OrderProductForm()
     updateQuantityForm = UpdateQuantityForm()
 
+    # If the user chooses to order products, update the on order count
     if request.method == 'POST':
-        print("request.method == POST")
         # Get order data
         orderedProducts = request.form
-        print(orderedProducts.getlist('quantity'))
-        print(orderedProducts)
+
+        # Separate order data into lists
         product_id_list = orderedProducts.getlist('product_id')
         quantity_list = orderedProducts.getlist('quantity')
-        print(f"product_id: {product_id_list}\nquantity: {quantity_list}")
-        #print(f"product_id: {product_id_list[0]}\nquantity: quantity_list[0]")
 
+        # Loop through product ids to update on order counts
         for i in range(len(product_id_list)):
             product = db.session.scalar(sa.select(Product).where(Product.product_id == product_id_list[i]))
-            if product:
-                #product.on_order_count = quantity_list[i]
-                print(f"product_id: {product_id_list[i]}\nquantity: quantity_list[i]")
-    """
-    #If the user chooses to order an item, place an order and add the data to the database
-    if orderProductForm.validate_on_submit():
-        orderedProduct = db.session.scalar(sa.select(Product).where(Product.product_id == orderProductForm.product_id.data))
-        if not orderedProduct:
-            flash("Invalid ID")
-        else:
-            #Create and add an order
-            order = Order(
-                        product_id=orderProductForm.product_id.data,
-                        quantity=orderProductForm.quantity.data,
-                        arrival_time=datetime.now(timezone.utc))
-            db.session.add(order)
-            # Update the on-order count of the product that's been ordered
-            orderedProduct.on_order_count=orderProductForm.quantity.data
-            db.session.commit()
-            # Refresh Page
-            return redirect(url_for('inventory.inventory'))
-    """
+            # If no product matching the id was found, return an error
+            if not product:
+                    flash("ERROR: Invalid Product ID Received")
+            else:
+                product.on_order_count += int(quantity_list[i])
+                db.session.commit()
+                # Refresh page
+                return redirect(url_for('inventory.inventory'))
+                #print(f"product_id: {product_id_list[i]}\nquantity: quantity_list[i]")
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm, updateQuantityForm=updateQuantityForm)
+    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, updateQuantityForm=updateQuantityForm)
 
 
 @bp.route('/update_quantity', methods=['GET','POST'])
@@ -142,7 +126,6 @@ def update_quantity():
     # Create form objects
     addProductForm = AddProductForm()
     removeProductForm = RemoveProductForm()
-    orderProductForm = OrderProductForm()
     updateQuantityForm = UpdateQuantityForm()
 
     #If the user chooses to order an item, place an order and add the data to the database
@@ -157,40 +140,5 @@ def update_quantity():
             # Refresh Page
             return redirect(url_for('inventory.inventory'))
 
+    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, updateQuantityForm=updateQuantityForm)
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm, updateQuantityForm=updateQuantityForm)
-
-
-"""
-@bp.route('/management/employee_info')
-@login_required
-def employee_info():
-
-    #Pull user data from database
-    users = db.session.query(User.__table__).all()
-    user = db.session.scalar(
-            sa.select(User).where(User.id == session['user_id']))
-
-    if user.role != 'Manager'and user.role != 'manager':
-        flash("You do not have access to this page!")
-        return redirect('/index')
-
-    addEmployeeForm = AddEmployeeForm()
-
-    return render_template('management/employee_info.html', users = users, title='PLACEHOLDER - Employee Information', addEmployeeForm = addEmployeeForm)
-
-@bp.route('/management/add_employee', methods=['POST'])
-def add_employee():
-
-    addEmployeeForm = AddEmployeeForm()
-
-    if addEmployeeForm.validate_on_submit():
-        newUser = User(id = addEmployeeForm.id.data, name = addEmployeeForm.name.data, role = addEmployeeForm.role.data)
-
-        db.session.add(newUser)
-        db.session.commit()
-        # Refresh page
-        return redirect(url_for('inventory.employee_info'))
-    
-    return render_template('management/employee_info.html', users = users, title='PLACEHOLDER - Employee Information', addEmployeeForm = addEmployeeForm)
-"""

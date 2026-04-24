@@ -37,7 +37,6 @@
             </tbody>
         </table>
     </div>
-    <br>
     <div class="inventory-buttons">
         <div class="add-product">
             <button onclick="openForm('add-product','add-product-button')" id="add-product-button">Add a Product</button>
@@ -114,7 +113,7 @@
             <button onclick="showOrderForm(true)" id="order-product-button">Place an Order</button>
             <button onclick="if(!finalizeOrder()){alert('You must select a product to order');}else{openForm('order-product', 'finalize-order-button',true)}" id="finalize-order-button">Finalize Order</button>
             <div class="product-popup" id="order-product">
-                <form id="order-product-form" method="post">
+                <form id="order-product-form" action="{{ url_for('inventory.order_product') }}" method="post">
                     <div id="head">
                         <label for="product_id">Product ID</label>
                         <label for="quantity">Quantity</label>
@@ -122,15 +121,15 @@
                     <div id="order-body">
                     </div>
                     <div class="popup-buttons">
-                        <button onclick="closeForm('order-product', 'finalize-order-button', 'order-list')" id="close-order-button" type="reset">Close</button>
+                        <button onclick="closeForm('order-product', 'finalize-order-button', 'order-table')" id="close-order-button" type="reset">Close</button>
                         <button onclick="submitOrder()" type="submit">Place Order</button>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
         <button onclick="showOrderForm(false)" id="cancel-order-button">Cancel Order</button>
     </div>
-        <script>
+    <script>
         function openForm(popupID, buttonID, order = null){
             document.getElementById(popupID).style.display="block";
             // If the order form is being opened, call finalize order
@@ -155,27 +154,28 @@
             const orderBody = document.getElementById(orderBodyID),
                   parentDiv = document.createElement("div");
 
-            parentDiv.setAttribute("id", "order-list");
-            //const headDiv = document.createElement("div");
-            //headDiv.setAttribute("id", "row")
-
-            //const idHead = document.createElement("label"),
-            //      quantityHead = document.createElement("label");
-
-            //idHead.innerText = 'Product ID';
-            //quantityHead.innerText = 'Quantity';
-
-            //quantityHead.setAttribute("for", "quantity");
-
-            //headDiv.appendChild(idHead);
-            //headDiv.appendChild(quantityHead);
+            parentDiv.setAttribute("id", "order-table");
 
             // Build a table of selected products
             for(let id of rowElements){
+                const productId = document.createElement("input");
                 const idCol = document.createElement("p");
                 const quantityCol = document.createElement("input");
+                //const nameCol = document.createElement('p');
+
+                // IN PROGRESS
+                //nameCol.setAttribute("class", "productNames");
+                //nameCol.innerText =
 
                 // Set id attributes
+                // NOTE: This element is invisible, and exists only for filling the form with the proper values
+                productId.setAttribute("class", "product_ids");
+                productId.setAttribute("type", "hidden");
+                productId.setAttribute("name", "product_id");
+                productId.setAttribute("value", id);
+
+                // Set id column attributes
+                //NOTE: This element exists to show the user what products have been selected, without any functionality
                 idCol.setAttribute("class", "productIDs");
                 idCol.innerText = id;
 
@@ -190,6 +190,7 @@
                 div.setAttribute("class", "lineitem-div");
 
                 // Add the elements within the div
+                div.appendChild(productId);
                 div.appendChild(idCol);
                 div.appendChild(quantityCol);
 
@@ -268,16 +269,12 @@
             for(let i = 0; i < listLength; i++){
 
                 // Get the values from both input values
-                product_id = productIDList[i].innerText;
+                product_id = productIDList[i].value;
                 quantity = quantityList[i].value;
-
-                alert(product_id);
 
                 // Bundle elements in data object before sending
                 data.append('product_id', product_id);
                 data.append('quantity', quantity);
-
-                alert(data.get("product_id"))
             }
 
             // Set fetch options
@@ -288,18 +285,15 @@
 
             // Send the order data to flask
             response = fetch(inventory_url, options)
-                .then(resp => {
+                .then(data => {
                     //If there's an error from the API, throw data
-                    if(!resp.ok){
-                        throw resp;
+                    if(!data.ok){
+                        throw data;
                     }
                 })
-                .then(resp => console.log(resp))
+                .then(data => console.log(data))
                 // Catch any network call error that occurs
                 .catch( error => console.error('Fetch error:',error));
-
         }
     </script>
-    </div>
-
 {% endblock %}
