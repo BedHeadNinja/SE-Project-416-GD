@@ -21,7 +21,44 @@ body {
   width: 300px;
   font-size: 20px;
 }
-
+.table{
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  height: 400px;
+  font-size: 20px;
+}
+.add-order-column{
+  display: none;
+}
+#order-product-button{
+  display: flex;
+}
+#finalize-order-button{
+  display: none;
+}
+#cancel-order-button{
+  display: none;
+}
+#head{
+  display: flex;
+  flex-direction: row;
+}
+.lineitem-div{
+  display: flex;
+  flex-direction: row;
+}
+.order-product-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 50%;
+}
 .product-popup{
   display: none;
   position: fixed;
@@ -65,7 +102,7 @@ body {
   color: white;
 }
 .logo{
-  font-size: 23px;
+  font-size: 230px;
   font-weight: bold;
   color: white;
   background-color: transparent;

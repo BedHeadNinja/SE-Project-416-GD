@@ -1,4 +1,4 @@
-from flask import current_app, render_template, flash, redirect, url_for, session
+from flask import current_app, render_template, flash, redirect, url_for, session, request
 from flask_login import current_user, login_user, logout_user, login_required
 import sqlalchemy as sa
 
@@ -6,7 +6,7 @@ import sqlalchemy as sa
 from IMS import db
 from IMS.models import Product, Order, User
 from IMS.inventory import bp
-from IMS.inventory.forms import AddProductForm, RemoveProductForm, OrderProductForm, AddEmployeeForm
+from IMS.inventory.forms import AddProductForm, RemoveProductForm, OrderProductForm, UpdateQuantityForm, AddEmployeeForm
 
 #!!!!! TEMP - REPLACE WITH arrivalTime() BLACKBOX FUNCTION !!!!!
 from datetime import datetime, timezone
@@ -19,27 +19,29 @@ from datetime import datetime, timezone
 @bp.route('/inventory', methods=['GET','POST'])
 @login_required
 def inventory():
-    #Pull product data from database
+    # Pull product data from database
     products = db.session.query(Product.__table__).all()
 
     # Create form objects
     addProductForm = AddProductForm()
     removeProductForm = RemoveProductForm()
     orderProductForm = OrderProductForm()
+    updateQuantityForm = UpdateQuantityForm()
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm)
+    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm, updateQuantityForm=updateQuantityForm)
 
 
 @bp.route('/add_product', methods=['GET','POST'])
 @login_required
 def add_product():
-    #Pull product data from database
+    # Pull product data from database
     products = db.session.query(Product.__table__).all()
 
     # Create form objects
     addProductForm = AddProductForm()
     removeProductForm = RemoveProductForm()
     orderProductForm = OrderProductForm()
+    updateQuantityForm = UpdateQuantityForm()
 
     # If the user chooses to add a product, add its values to the database
     if addProductForm.validate_on_submit():
@@ -49,19 +51,20 @@ def add_product():
         # Refresh page
         return redirect(url_for('inventory.inventory'))
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm)
+    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm, updateQuantityForm=updateQuantityForm)
 
 
 @bp.route('/remove_product', methods=['GET','POST'])
 @login_required
 def remove_product():
-    #Pull product data from database
+    # Pull product data from database
     products = db.session.query(Product.__table__).all()
 
     # Create form objects
     addProductForm = AddProductForm()
     removeProductForm = RemoveProductForm()
     orderProductForm = OrderProductForm()
+    updateQuantityForm = UpdateQuantityForm()
 
     # If the user chooses to remove a product, delete it from the database
     if removeProductForm.validate_on_submit():
@@ -77,7 +80,7 @@ def remove_product():
             return redirect(url_for('inventory.inventory'))
 
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm)
+    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm, updateQuantityForm=updateQuantityForm)
 
 @bp.route('/order_product', methods=['GET','POST'])
 @login_required
@@ -89,7 +92,25 @@ def order_product():
     addProductForm = AddProductForm()
     removeProductForm = RemoveProductForm()
     orderProductForm = OrderProductForm()
+    updateQuantityForm = UpdateQuantityForm()
 
+    if request.method == 'POST':
+        print("request.method == POST")
+        # Get order data
+        orderedProducts = request.form
+        print(orderedProducts.getlist('quantity'))
+        print(orderedProducts)
+        product_id_list = orderedProducts.getlist('product_id')
+        quantity_list = orderedProducts.getlist('quantity')
+        print(f"product_id: {product_id_list}\nquantity: {quantity_list}")
+        #print(f"product_id: {product_id_list[0]}\nquantity: quantity_list[0]")
+
+        for i in range(len(product_id_list)):
+            product = db.session.scalar(sa.select(Product).where(Product.product_id == product_id_list[i]))
+            if product:
+                #product.on_order_count = quantity_list[i]
+                print(f"product_id: {product_id_list[i]}\nquantity: quantity_list[i]")
+    """
     #If the user chooses to order an item, place an order and add the data to the database
     if orderProductForm.validate_on_submit():
         orderedProduct = db.session.scalar(sa.select(Product).where(Product.product_id == orderProductForm.product_id.data))
@@ -107,9 +128,38 @@ def order_product():
             db.session.commit()
             # Refresh Page
             return redirect(url_for('inventory.inventory'))
+    """
+
+    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm, updateQuantityForm=updateQuantityForm)
 
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm)
+@bp.route('/update_quantity', methods=['GET','POST'])
+@login_required
+def update_quantity():
+    # Pull product data from database
+    products = db.session.query(Product.__table__).all()
+
+    # Create form objects
+    addProductForm = AddProductForm()
+    removeProductForm = RemoveProductForm()
+    orderProductForm = OrderProductForm()
+    updateQuantityForm = UpdateQuantityForm()
+
+    #If the user chooses to order an item, place an order and add the data to the database
+    if updateQuantityForm.validate_on_submit():
+        updatedProduct = db.session.scalar(sa.select(Product).where(Product.product_id == updateQuantityForm.product_id.data))
+        if not updatedProduct:
+            flash("Invalid ID")
+        else:
+            # Update the on-order count of the product that's been ordered
+            updatedProduct.on_hand_count=updateQuantityForm.quantity.data
+            db.session.commit()
+            # Refresh Page
+            return redirect(url_for('inventory.inventory'))
+
+
+    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, orderProductForm=orderProductForm, updateQuantityForm=updateQuantityForm)
+
 
 """
 @bp.route('/management/employee_info')

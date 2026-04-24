@@ -24,4 +24,9 @@ class AddEmployeeForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     id = IntegerField('ID', validators=[DataRequired(), NumberRange(min=0, message="You cannot enter a negative count")])
     role = SelectField('Role', choices=[('Employee','Employee'), ('Manager', 'Manager')], validators=[DataRequired()])
-    
+
+# Update the on hand count for a product
+class UpdateQuantityForm(FlaskForm):
+    product_id = IntegerField('Product ID')
+    quantity = IntegerField('Quantity', validators=[DataRequired(), NumberRange(min=1, message="You must enter a positive value")])
+    submit = SubmitField('Update Quantity')

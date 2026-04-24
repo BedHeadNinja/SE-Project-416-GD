@@ -5,6 +5,7 @@
         <table>
             <thead>
                 <tr>
+                    <td class="add-order-column">Add</td>
                     <td>Product ID</td>
                     <td>Product Name</td>
                     <td>Quantity On Hand</td>
@@ -15,18 +16,19 @@
             <tbody>
                 {% for product in products %}
                 <tr>
+                    <td class="add-order-column"><input class="order-checkbox" type="checkbox" id="{{ product[0] }}"></td>
                     {% for column in product %}
-                        {% if not column %}
-                            <td>N/A</td>
+                        {% if ( (column == product[2]) and (product[-1]) ) %}
+                            {% if (product[2] < product[-1]) %}
+                                <td style="color: red;">{{ product[2] }}</td>
+                            {% else %}
+                                <td>{{ product[2] }}</td>
+                            {% endif %}
                         {% else %}
-                            {% if ( (column == product[2]) and (product[-1]) ) %}
-                                {% if (product[2] < product[-1]) %}
-                                    <td style="color: red;">{{ product[2] }}</td>
-                                {% else %}
-                                    <td>{{ product[2] }}</td>
-                                {% endif %}
-                            {% else%}
-                            <td>{{ column }}</td>
+                            {% if column != None %}
+                                <td>{{ column }}</td>
+                            {% else %}
+                                <td>N/A</td>
                             {% endif %}
                         {% endif %}
                     {% endfor %}
@@ -40,7 +42,7 @@
         <div class="add-product">
             <button onclick="openForm('add-product','add-product-button')" id="add-product-button">Add a Product</button>
             <div class="product-popup" id="add-product"> 
-                <form action="{{ url_for('inventory.add_product') }}" method="POST" id="add-product-form" novalidate>
+                <form action="{{ url_for('inventory.add_product') }}" method="POST" id="add-product-form">
                     {{ addProductForm.hidden_tag() }}
                 <p>
                     {{ addProductForm.product_name.label }}<br>
@@ -62,7 +64,7 @@
                 </div>
                 </form>
             </div>
-        </div> 
+        </div>
         <div class="remove-product">
             <button onclick="openForm('remove-product', 'remove-product-button')" id="remove-product-button">Remove a Product</button>
             <div class="product-popup" id="remove-product">
@@ -81,42 +83,221 @@
                 </div>
                 </form>
             </div>
-        </div> 
-        <div class="order-product">
-            <button onclick="openForm('order-product', 'order-product-button')" id="order-product-button">Order a Product</button>
-            <div class="product-popup" id="order-product">
-                <form action="{{ url_for('inventory.order_product') }}" method="POST" id="order-product-form">
-                    {{ orderProductForm.hidden_tag() }}
+        </div>
+        <div class="update-quantity">
+            <button onclick="openForm('update-quantity', 'update-quantity-button')" id="update-quantity-button">Update Product Quantity</button>
+            <div class="product-popup" id="update-quantity">
+                <form action="{{ url_for('inventory.update_quantity') }}" method="POST" id="update-quantity-form">
+                    {{ updateQuantityForm.hidden_tag() }}
                 <p>
-                    {{ orderProductForm.product_id.label }}<br>
-                    {{ orderProductForm.product_id(size=32) }}
+                    {{ updateQuantityForm.product_id.label }}<br>
+                    {{ updateQuantityForm.product_id(size=32) }}
                 </p>
-                    {% for error in orderProductForm.product_id.errors %}
+                    {% for error in updateQuantityForm.product_id.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 <p>
-                    {{ orderProductForm.quantity.label }}<br>
-                    {{ orderProductForm.quantity(size=32) }}
+                    {{ updateQuantityForm.quantity.label }}<br>
+                    {{ updateQuantityForm.quantity(size=32)}}
                 </p>
-                    {% for error in orderProductForm.quantity.errors %}
+                    {% for error in updateQuantityForm.quantity.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 <div class="popup-buttons">
-                    <button onclick="closeForm('order-product', 'order-product-button')" type="reset">Close</button>
-                    {{ orderProductForm.submit() }}
+                    <button onclick="closeForm('update-quantity', 'update-quantity-button')" type="reset">Close</button>
+                    {{ updateQuantityForm.submit() }}
                 </div>
                 </form>
             </div>
         </div>
+        <div class="order-product">
+            <button onclick="showOrderForm(true)" id="order-product-button">Place an Order</button>
+            <button onclick="if(!finalizeOrder()){alert('You must select a product to order');}else{openForm('order-product', 'finalize-order-button',true)}" id="finalize-order-button">Finalize Order</button>
+            <div class="product-popup" id="order-product">
+                <form id="order-product-form" method="post">
+                    <div id="head">
+                        <label for="product_id">Product ID</label>
+                        <label for="quantity">Quantity</label>
+                    </div>
+                    <div id="order-body">
+                    </div>
+                    <div class="popup-buttons">
+                        <button onclick="closeForm('order-product', 'finalize-order-button', 'order-list')" id="close-order-button" type="reset">Close</button>
+                        <button onclick="submitOrder()" type="submit">Place Order</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <button onclick="showOrderForm(false)" id="cancel-order-button">Cancel Order</button>
     </div>
         <script>
-        function openForm(popupID, buttonID){
-            document.getElementById(popupID).style.display= "block";
-            document.getElementById(buttonID).style.display= "none";
+        function openForm(popupID, buttonID, order = null){
+            document.getElementById(popupID).style.display="block";
+            // If the order form is being opened, call finalize order
+            if (order == null) {
+                document.getElementById(buttonID).style.display="none";
+            }
         }
-        function closeForm(popupID, buttonID){
+        function closeForm(popupID, buttonID, listID = null){
+            // Hide popup, show button
             document.getElementById(popupID).style.display= "none";
             document.getElementById(buttonID).style.display= "block";
+
+            // If the form was an order form, hide checkboxes and delete the order table
+            if (listID != null) {
+                // Delete the table
+                const div = document.getElementById(listID);
+                div.remove();
+            }
+        }
+        function buildTable(rowElements, orderBodyID){
+            // Get the div to add the table under, then create a table element
+            const orderBody = document.getElementById(orderBodyID),
+                  parentDiv = document.createElement("div");
+
+            parentDiv.setAttribute("id", "order-list");
+            //const headDiv = document.createElement("div");
+            //headDiv.setAttribute("id", "row")
+
+            //const idHead = document.createElement("label"),
+            //      quantityHead = document.createElement("label");
+
+            //idHead.innerText = 'Product ID';
+            //quantityHead.innerText = 'Quantity';
+
+            //quantityHead.setAttribute("for", "quantity");
+
+            //headDiv.appendChild(idHead);
+            //headDiv.appendChild(quantityHead);
+
+            // Build a table of selected products
+            for(let id of rowElements){
+                const idCol = document.createElement("p");
+                const quantityCol = document.createElement("input");
+
+                // Set id attributes
+                idCol.setAttribute("class", "productIDs");
+                idCol.innerText = id;
+
+                // Set quantity attributes
+                quantityCol.setAttribute("class", "quantities");
+                quantityCol.setAttribute("type", "number");
+                quantityCol.setAttribute("name", "quantity");
+                quantityCol.required = true;
+
+                // Create a div to hold both elements
+                const div = document.createElement("div");
+                div.setAttribute("class", "lineitem-div");
+
+                // Add the elements within the div
+                div.appendChild(idCol);
+                div.appendChild(quantityCol);
+
+                // Add the div to the parent
+                parentDiv.appendChild(div);
+            }
+            orderBody.appendChild(parentDiv);
+        }
+        function showOrderForm(showOrder){
+            // Get the checkboxes for order styling
+            const products = document.getElementsByClassName('add-order-column');
+
+            // If showOrder is true, show order elements and hide inventory elements. Otherwise, do the opposite
+            if(showOrder == true){
+                // Loop through list of products
+                for (let element of products){
+                    element.style.display="block";
+                }
+                document.getElementById('add-product-button').style.display="none";
+                document.getElementById('remove-product-button').style.display="none";
+                document.getElementById('update-quantity-button').style.display="none";
+                document.getElementById('order-product-button').style.display="none";
+                document.getElementById('finalize-order-button').style.display="block";
+                document.getElementById('cancel-order-button').style.display="block";
+            }
+            else{
+                // Loop through list of products
+                for (const element of products){
+                    element.style.display="none";
+                }
+                document.getElementById('add-product-button').style.display="block";
+                document.getElementById('remove-product-button').style.display="block";
+                document.getElementById('update-quantity-button').style.display="block";
+                document.getElementById('order-product-button').style.display="block";
+                document.getElementById('finalize-order-button').style.display="none";
+                document.getElementById('cancel-order-button').style.display="none";
+            }
+        }
+        function finalizeOrder(){
+            // Get all checkbox elements
+            const products = document.getElementsByClassName('order-checkbox');
+            // Create a new array for selected products
+            const selectedProducts = [];
+            // Loop through list of clicked products
+            for (let element of products){
+                if(element.checked == true){
+                    // Add the element's id to the list of selected products
+                    selectedProducts.push(element.id);
+                }
+            }
+
+            // If no products have been selected, return false
+            if (selectedProducts.length == 0){
+                return false;
+            }
+            else{
+                // Call buildTable and send the selected products
+                buildTable(selectedProducts, "order-body");
+                return true;
+            }
+        }
+        function submitOrder(){
+            // Get lists of product ids and quantities
+            const productIDList = document.getElementsByClassName('productIDs'),
+                  quantityList = document.getElementsByClassName('quantities');
+
+            // Get the length of the lists (both are the same length)
+            const listLength = productIDList.length;
+
+            // Get the url for the order_product route, then convert it to json
+            const inventory_url = {{ url_for('inventory.order_product')|tojson }};
+
+            // Create data object
+            let data = new FormData();
+
+            for(let i = 0; i < listLength; i++){
+
+                // Get the values from both input values
+                product_id = productIDList[i].innerText;
+                quantity = quantityList[i].value;
+
+                alert(product_id);
+
+                // Bundle elements in data object before sending
+                data.append('product_id', product_id);
+                data.append('quantity', quantity);
+
+                alert(data.get("product_id"))
+            }
+
+            // Set fetch options
+            const options = {
+                method: 'POST',
+                body: data,
+            };
+
+            // Send the order data to flask
+            response = fetch(inventory_url, options)
+                .then(resp => {
+                    //If there's an error from the API, throw data
+                    if(!resp.ok){
+                        throw resp;
+                    }
+                })
+                .then(resp => console.log(resp))
+                // Catch any network call error that occurs
+                .catch( error => console.error('Fetch error:',error));
+
         }
     </script>
     </div>

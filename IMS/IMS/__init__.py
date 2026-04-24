@@ -3,6 +3,7 @@ from .config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
+from flask_cors import CORS
 
 # Define extension objects
 # db: SQLAlchemy. Handles database
@@ -12,6 +13,9 @@ migrate = Migrate()
 # login: flask-login. Handles login features like remember me. Functions with RBAC
 login = LoginManager()
 login.login_view = 'auth.loginID'
+
+#!TESTING!
+cors = CORS()
 
 def create_app(config_class=Config):
     # Create flask object
@@ -23,6 +27,9 @@ def create_app(config_class=Config):
     db.init_app(app)
     migrate.init_app(app, db)
     login.init_app(app)
+
+    #!TESTING!
+    cors.init_app(app)
 
     # Create errors blueprint
     from IMS.errors import bp as errors_bp

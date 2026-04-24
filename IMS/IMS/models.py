@@ -140,7 +140,7 @@ class Order(db.Model):
     # PRODUCT ID
     product_id: so.Mapped[int] = so.mapped_column()
     # QUANTITY
-    quantity: so.Mapped[int] = so.mapped_column()
+    quantity: so.Mapped[int] = so.mapped_column(default=0)
     # TIMESTAMP
     timestamp: so.Mapped[datetime] = so.mapped_column(
             index=True, default=lambda: datetime.now(timezone.utc))
@@ -158,3 +158,15 @@ class Order(db.Model):
     def __repr__(self):
         return '<Order(order_id={}, product_id={}, quantity={}, timestamp={}, arrival_time={})>'.format(
                 self.order_id,self.product_id,self.quantity, self.timestamp, self.arrival_time)
+"""
+class LineItem(db.model):
+    # ORDER ID - PRIMARY KEY
+    # NOTE: Ties line item to its order
+    order_id: so.Mapped[UUID] = so.mapped_column(primary_key=True, unique=True, default-uuid4)
+    # PRODUCT ID
+    product_id: so.Mapped[int] =so.mapped_column()
+    # QUANTITY
+    quantity: so.Mapped[int] = soo.mapped_column(default=0)
+"""
+
+
