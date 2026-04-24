@@ -5,7 +5,7 @@ import sqlalchemy as sa
 import sqlalchemy.orm as so
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from flask_rbac import RoleMixin
+
 
 #! Local Imports!#
 from IMS import db, login, rbac
@@ -24,24 +24,7 @@ from IMS import db, login, rbac
 #   Enables 'remember me' functionality for site.
 #
 """
-users_roles = db.Table(
-    'users_roles',
-    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-    db.Column('role_id', db.Integer, db.ForeignKey('role.id'))
-)
 
-@rbac.as_role_model  
-class Role(db.Model, RoleMixin):
-    id: so.Mapped[int] = so.mapped_column(primary_key=True)
-    name: so.Mapped[str] = so.mapped_column(sa.String(20), unique=True)
-
-    def __init__(self, name):
-        RoleMixin.__init__(self)
-        self.name = name
-
-    @staticmethod
-    def get_by_name(name):
-        return db.session.query(Role).filter_by(name=name).first()
         
 @login.user_loader
 def load_user(id):
@@ -72,31 +55,6 @@ class User(UserMixin, db.Model):
     # PASSWORD_HASH: Hashed for security
     password_hash: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
 
-    roles: so.Mapped[list["Role"]] = so.relationship(
-        'Role',
-        secondary=users_roles,
-        backref=db.backref('users', lazy='dynamic')
-    )
-
-    def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    def check_password(self, password):
-        return check_password_hash(self.password_hash, password)
-
-    def add_role(self, role):
-        self.roles.append(role)
-
-    def add_roles(self, roles):
-        for role in roles:
-            self.add_role(role)
-
-    def get_roles(self):
-        for role in self.roles:
-            yield role
-
-    def __repr__(self):
-        return '<User(id={},name={})>'.format(self.id, self.name)
     
     """
     #               Function - set_password
