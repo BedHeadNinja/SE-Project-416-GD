@@ -38,9 +38,8 @@
                     {% endif %}
                 </div>
 
+        <div class="page">
         
-        <div class="body-class">
-            <hr>
             {% with messages = get_flashed_messages() %}
             {% if messages %}
             <ul>
@@ -51,6 +50,7 @@
             {% endif %}
             {% endwith %}
             {% block content %}{% endblock %}
+        
         </div>
     </body>
     <script src = "{{ url_for('static', filename='jsFile/main.js') }}"> </script>

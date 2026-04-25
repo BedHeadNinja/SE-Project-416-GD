@@ -5,7 +5,8 @@
   <title>Employee</title>
   <link rel="stylesheet" href="../cssFile/UI.css">
   <link rel="stylesheet" href="../cssFile/header.css">
-
+  <link rel="stylesheet" href="../cssFile/addTable.css">
+  <link rel="stylesheet" href="../cssFile/E-P_Button.css">
 </head>
 
 <body>
@@ -14,37 +15,70 @@
       <button class="logo" onclick="location.reload()">Name-Company</button>
     </div>
     <div class="right-section">
-      <button class="cart-button">Something</button>
+      <button class="hamburger" onclick="toggleMenu()">☰</button>
+      <div class="E_P_Button" id="EPButton">
+        <a class="product-link" href="/Main_pages/product.html">Product</a>
+        <a class="product-link" href="/Main_pages/Employee.html">Employee</a>
+        <button class="login-button">Login</button>
+      </div>
     </div>
   </div>
-  <div>
-    <div class="first-row">
-      <div class="product">
-        <a href="product.html" target="_blank" class="product-link">
-          <p>Product</p>
-        </a>
+  <div class="body-css">
+    <div class="body-header">
+      <div class="employee">
+        <p style="font-size:13px;margin-bottom:4px;color: #3b2f2f;">Employee Portal</p>
+        <h1 class="page-title" style="font-size:24px;font-weight:500;color: #3b2f2f;">Employee Directory</h1>
       </div>
-      <div class="product">
-        <a href="Employee.html" target="_blank" class="product-link">
-          <p>Employee</p>
-        </a>
+    </div>
+    <div class="grid-middle">
+      <div class="box">
+        <div class="employee-logo">
+          <img src="/image/employee.png" alt="Employee Icon" style="width: 35px; height: 35px;">
+        </div>
+        <div>
+          <p style="font-size: 17px;">Total Employees</p>
+          <p><strong>1</strong></p>
+        </div>
+      </div>
+      <div class="box">
+        <div class="employee-logo">
+          <img src="/image/ticked.png" alt="Employee Icon" style="width: 35px; height: 35px;">
+        </div>
+        <div>
+          <p style="font-size: 17px;">Active Employee</p>
+          <p><strong>1</strong></p>
+        </div>
+      </div>
+      <div class="box">
+        <div class="employee-logo">
+          <img src="/image/unchecked.png" alt="Employee Icon" style="width: 35px; height: 35px;">
+        </div>
+        <div>
+          <p style="font-size: 17px;">Inactive Employee</p>
+          <p><strong>0</strong></p>
+        </div>
       </div>
     </div>
     <div class="tableCSS">
       <table>
-        <br>
-        <tr>
-          <th>Employee Name</th>
-          <th>ID</th>
-          <th>Role</th>
-        </tr>
-        <tr>
-          <th>abc</th>
-          <th>abc</th>
-          <th>abc</th>
-        </tr>
+        <thead>
+          <tr>
+            <th>Employee Name</th>
+            <th>ID</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>abc</td>
+            <td>abc</td>
+            <td>abc</td>
+          </tr>
+        </tbody>
       </table>
     </div>
+  </div>
+  <script src="../jsFile/E-P-Button.js"> </script>
 </body>
 
 </html>

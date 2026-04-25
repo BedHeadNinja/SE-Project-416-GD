@@ -99,6 +99,8 @@ def registerPassword():
         db.session.merge(user)
         db.session.commit()
 
+        flash("Password Registered!")
+
         return redirect('ID')
     
     return render_template('/auth/register.html',title='Login', form=form)

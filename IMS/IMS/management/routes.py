@@ -6,7 +6,7 @@ import sqlalchemy as sa
 from IMS import db
 from IMS.models import User
 from IMS.management import bp
-from IMS.management.forms import AddEmployeeForm
+from IMS.management.forms import AddEmployeeForm, RemoveEmployeeForm
 
 
 @bp.route('/management/employee_info')
@@ -23,8 +23,11 @@ def employee_info():
         return redirect('/index')
 
     addEmployeeForm = AddEmployeeForm()
+    removeEmployeeForm = RemoveEmployeeForm()
 
-    return render_template('management/employee_info.html', users=users, title='PLACEHOLDER - Employee Information', addEmployeeForm=addEmployeeForm)
+    userStats = [len(users), 0, 0]
+
+    return render_template('management/employee_info.html', users=users, userStats=userStats, title='PLACEHOLDER - Employee Information', addEmployeeForm=addEmployeeForm, removeEmployeeForm=removeEmployeeForm)
 
 
 
@@ -53,4 +56,29 @@ def add_employee():
             # Refresh page
             return redirect(url_for('management.employee_info'))
 
-    return render_template('management/employee_info.html', users=users, title='PLACEHOLDER - Employee Information', addEmployeeForm=addEmployeeForm)
+    return redirect(url_for('management.employee_info'))
+
+@bp.route('/remove_employee', methods=['POST'])
+@login_required
+def remove_employee():
+    #Pull user data from database
+    users = db.session.query(User.__table__).all()
+    user = db.session.scalar(
+            sa.select(User).where(User.id == session['user_id']))
+
+    removeEmployeeForm = RemoveEmployeeForm()
+
+    if removeEmployeeForm.validate_on_submit():
+        rmUser = db.session.scalar(sa.select(User).where(User.id == removeEmployeeForm.id.data))
+        # Check if entered user id is unique
+        
+        if not rmUser:
+            flash("Invalid ID")
+        else:
+
+            db.session.delete(rmUser)
+            db.session.commit()
+            # Refresh page
+            return redirect(url_for('management.employee_info'))
+
+    return redirect(url_for('management.employee_info'))

@@ -1,12 +1,11 @@
-/*create a function to open the add product form */ 
+/*create a function to open the add product form */
 function openaddElement() {
   document.getElementById("form").style.display = "block";
 }
 function closeForm() {
   document.getElementById("form").style.display = "none";
 }
-
-/*create a function to add a product */ 
+/*create a function to add a product */
 function addProduct() {
   let name = document.getElementById("name").value;
   let id = document.getElementById("id").value;

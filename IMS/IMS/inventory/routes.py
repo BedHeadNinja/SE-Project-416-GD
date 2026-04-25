@@ -22,28 +22,37 @@ def inventory():
     # Pull product data from database
     products = db.session.query(Product.__table__).all()
 
+    # List of product states
+    productStats = [len(products), 0, 0]
+
     # Create form objects
     addProductForm = AddProductForm()
     removeProductForm = RemoveProductForm()
     updateQuantityForm = UpdateQuantityForm()
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, updateQuantityForm=updateQuantityForm)
+    # Gather product states from product data
+    for product in products:
+        # If the total count is at or below the minimum, add to low stock count
+        if (product.on_hand_count + product.on_order_count <= product.stock_alert_minimum):
+            productStats[1] += 1
+        # If the total count is within 50 of the minimum, add to expiring count
+        elif (product.on_hand_count + product.on_order_count <= product.stock_alert_minimum + 50):
+            productStats[2] += 1
+
+    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, productStats=productStats, addProductForm=addProductForm, removeProductForm=removeProductForm, updateQuantityForm=updateQuantityForm)
 
 
 @bp.route('/add_product', methods=['GET','POST'])
 @login_required
 def add_product():
-    # Pull product data from database
-    products = db.session.query(Product.__table__).all()
 
     # Create form objects
     addProductForm = AddProductForm()
-    removeProductForm = RemoveProductForm()
-    updateQuantityForm = UpdateQuantityForm()
 
     # If the user chooses to add a product, add its values to the database
     if addProductForm.validate_on_submit():
-        newProduct = Product(product_name=addProductForm.product_name.data, on_hand_count=addProductForm.on_hand_count.data)
+        newProduct = Product(product_name=addProductForm.product_name.data ,on_hand_count = addProductForm.on_hand_count.data)
+        # If no product was found, throw an error message
         if not newProduct:
             flash("ERROR: Invalid ID")
         else:
@@ -52,19 +61,15 @@ def add_product():
             # Refresh page
             return redirect(url_for('inventory.inventory'))
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, updateQuantityForm=updateQuantityForm)
+    return redirect(url_for('inventory.inventory'))
 
 
 @bp.route('/remove_product', methods=['GET','POST'])
 @login_required
 def remove_product():
-    # Pull product data from database
-    products = db.session.query(Product.__table__).all()
 
-    # Create form objects
-    addProductForm = AddProductForm()
+    # Create form object
     removeProductForm = RemoveProductForm()
-    updateQuantityForm = UpdateQuantityForm()
 
     # If the user chooses to remove a product, delete it from the database
     if removeProductForm.validate_on_submit():
@@ -78,19 +83,11 @@ def remove_product():
             # Refresh page
             return redirect(url_for('inventory.inventory'))
 
-
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, updateQuantityForm=updateQuantityForm)
+    return redirect(url_for('inventory.inventory'))
 
 @bp.route('/order_product', methods=['GET','POST'])
 @login_required
 def order_product():
-    #Pull product data from database
-    products = db.session.query(Product.__table__).all()
-
-    # Create form objects
-    addProductForm = AddProductForm()
-    removeProductForm = RemoveProductForm()
-    updateQuantityForm = UpdateQuantityForm()
 
     # If the user chooses to order products, update the on order count
     if request.method == 'POST':
@@ -112,20 +109,19 @@ def order_product():
                 db.session.commit()
                 # Refresh page
                 return redirect(url_for('inventory.inventory'))
-                #print(f"product_id: {product_id_list[i]}\nquantity: quantity_list[i]")
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, updateQuantityForm=updateQuantityForm)
-
+    return redirect(url_for('inventory.inventory'))
 
 @bp.route('/update_quantity', methods=['GET','POST'])
 @login_required
 def update_quantity():
     # Pull product data from database
-    products = db.session.query(Product.__table__).all()
+    #products = db.session.query(Product.__table__).all()
 
-    # Create form objects
-    addProductForm = AddProductForm()
-    removeProductForm = RemoveProductForm()
+    # List of product states
+    #productStats = [len(products), 0, 0]
+
+    # Create form object
     updateQuantityForm = UpdateQuantityForm()
 
     #If the user chooses to order an item, place an order and add the data to the database
@@ -140,5 +136,4 @@ def update_quantity():
             # Refresh Page
             return redirect(url_for('inventory.inventory'))
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, addProductForm=addProductForm, removeProductForm=removeProductForm, updateQuantityForm=updateQuantityForm)
-
+    return redirect(url_for('inventory.inventory'))

@@ -7,3 +7,8 @@ class AddEmployeeForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
     id = IntegerField('ID', validators=[DataRequired(), NumberRange(min=0, message="You cannot enter a negative count")])
     role = SelectField('Role', choices=[('Employee','Employee'), ('Manager', 'Manager')], validators=[DataRequired()])
+
+class RemoveEmployeeForm(FlaskForm):
+    submit = SubmitField('Remove Employee')
+    id = IntegerField('ID', validators=[DataRequired(), NumberRange(min=0, message="You cannot enter a negative count")])
+    

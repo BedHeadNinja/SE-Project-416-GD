@@ -97,21 +97,115 @@
  }
 
  .tableCSS {
-   width: 70%;
-   overflow-x: visible;
-   margin-top: 10px;
-   background-color: white;
- }
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  border: 1px solid #e0ddd6;
+}
 
  table {
-   border-collapse: collapse;
-   width: 100%;
- }
+  border-collapse: collapse;
+  width: 100%;
+}
 
- table td,
- table th {
-   border: 1px solid black;
-   padding: 8px;
-   text-align: center;
-   font-weight: bold;
- }
+thead th {
+  padding: 13px 18px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #888;
+}
+
+thead tr {
+  background: #f9f8f5;
+  border-bottom: 1px solid #e0ddd6;
+}
+
+tbody tr {
+  border-bottom: 1px solid #e0ddd6;
+  transition: background-color 0.2s;
+}
+
+tbody td {
+  padding: 14px 18px;
+  font-size: 14px;
+  color: #1a1a1a;
+}
+
+ .grid-middle {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  padding-left: 30px;
+  gap: 20px;
+  background: #ffffff;
+  border: 1px solid #e0ddd6;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+  height: 100px;
+  width:250px;
+}
+.employee-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+} 
+.employee-logo img {
+  width: 35px;
+  height: 35px;
+}
+
+.body-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.body-css {
+  align-items: center;
+  max-width: 960px;
+  margin: 20px auto;
+  padding: 0 24px;
+}
+.page-title {
+  font-size: 24px;
+  font-weight: 500;
+  margin: 0;
+  padding: 0;
+}
+
+.addButton {
+  display: flex;
+  align-items: center;
+  padding: 9px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.18s;
+  background-color: #f3f0e9;
+  border-radius: 10px;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonArea {
+  display: flex;
+  justify-content: right;
+  gap: 8px;
+}

@@ -2,9 +2,8 @@
 {% extends "/auth/login.html" %}
 
 {% block loginField %}
-
-    {{ form.username.label }}<br>
-    {{ form.username(size=32) }}
+    {{ form.username.label }}
+    {{ form.username(class="placeholder", title="false") }}
     {% for error in form.username.errors %}
         <span style="color: red;">[{{ error }}]</span>
     {% endfor %}
