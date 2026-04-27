@@ -30,7 +30,7 @@ def create_app(config_class=Config):
 
     # Create auth blueprint
     from IMS.auth import bp as auth_bp
-    app.register_blueprint(auth_bp, url_prifix='/auth')
+    app.register_blueprint(auth_bp, url_prefix='/auth')
 
     # Create inventory blueprint
     from IMS.inventory import bp as inventory_bp
