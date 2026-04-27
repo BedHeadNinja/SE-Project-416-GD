@@ -2,41 +2,50 @@
 
 {% block content %}
     <div class="body-css">
-    <div class="body-header">
-      <div class="employee">
-        <p style="font-size:13px;margin-bottom:4px;color: #3b2f2f;">Employee Portal</p>
-        <h1 class="page-title" style="font-size:24px;font-weight:500;color: #3b2f2f;">Product Directory</h1>
-    </div>
-    <div class="grid-middle">
-      <div class="box">
-        <div class="employee-logo">
-          <img src="{{ url_for('static', filename='/image/product.png') }}" alt="Employee Icon" style="width: 35px; height: 35px;">
+        <script>
+            function preloadImage(url){
+                let img = new Image();
+                img.src = url;
+            }
+            preloadImage({{ url_for('static', filename='/image/product.png') }})
+            preloadImage({{ url_for('static', filename='/image/low_stock.png') }})
+            preloadImage({{ url_for('static', filename='/image/expiring.png') }})
+        </script>
+        <div class="body-header">
+            <div class="employee">
+                <p style="font-size:13px;margin-bottom:4px;color: #3b2f2f;">Employee Portal</p>
+                <h1 class="page-title" style="font-size:24px;font-weight:500;color: #3b2f2f;">Product Directory</h1>
+            </div>
+            <div class="grid-middle">
+                <div class="box">
+                    <div class="employee-logo">
+                        <img src="{{ url_for('static', filename='/image/product.png') }}" alt="Employee Icon" style="width: 35px; height: 35px;">
+                    </div>
+                    <div>
+                        <p style="font-size: 17px;">Total Products</p>
+                        <p><strong>{{ productStats[0] }}</strong></p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="employee-logo">
+                        <img src="{{ url_for('static', filename='/image/low_stock.png') }}" alt="Employee Icon" style="width: 35px; height: 35px;">
+                    </div>
+                    <div>
+                        <p style="font-size: 17px;">Low Stock</p>
+                        <p><strong>{{ productStats[1] }}</strong></p>
+                    </div>
+                </div>
+                <div class="box">
+                    <div class="employee-logo">
+                        <img src="{{ url_for('static', filename='/image/expiring.png') }}" alt="Employee Icon" style="width: 35px; height: 35px;">
+                    </div>
+                    <div>
+                        <p style="font-size: 17px;">Expiring Soon</p>
+                        <p><strong>{{ productStats[2] }}</strong></p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div>
-          <p style="font-size: 17px;">Total Products</p>
-          <p><strong>{{ productStats[0] }}</strong></p>
-        </div>
-      </div>
-      <div class="box">
-        <div class="employee-logo">
-          <img src="{{ url_for('static', filename='/image/low_stock.png') }}" alt="Employee Icon" style="width: 35px; height: 35px;">
-        </div>
-        <div>
-          <p style="font-size: 17px;">Low Stock</p>
-          <p><strong>{{ productStats[1] }}</strong></p>
-        </div>
-      </div>
-      <div class="box">
-        <div class="employee-logo">
-          <img src="{{ url_for('static', filename='/image/expiring.png') }}" alt="Employee Icon" style="width: 35px; height: 35px;">
-        </div>
-        <div>
-          <p style="font-size: 17px;">Expiring Soon</p>
-          <p><strong>{{ productStats[2] }}</strong></p>
-        </div>
-      </div>
-    </div>
-    </div>
     <div class="tableCSS">
         <table>
             <thead>
@@ -143,6 +152,32 @@
                 </form>
             </div>
         </div>
+        <div class="set-threshold">
+            <button class="enter" onclick="openForm('set-threshold', 'set-threshold-button')" id="set-threshold-button">Set Low Stock Threshold</button>
+            <div class="product-popup" id="set-threshold">
+                <form action="{{ url_for('inventory.set_threshold') }}" method="POST" id="set-threshold-form">
+                    {{ setThresholdForm.hidden_tag() }}
+                <p>
+                    {{ setThresholdForm.product_id.label }}<br>
+                    {{ setThresholdForm.product_id(size=32) }}
+                </p>
+                    {% for error in setThresholdForm.product_id.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                <p>
+                    {{ setThresholdForm.stock_alert_minimum.label }}<br>
+                    {{ setThresholdForm.stock_alert_minimum(size=32)}}
+                </p>
+                    {% for error in setThresholdForm.stock_alert_minimum.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                <div class="popup-buttons">
+                    <button onclick="closeForm('set-threshold', 'set-threshold-button')" type="reset">Close</button>
+                    {{ setThresholdForm.submit() }}
+                </div>
+                </form>
+            </div>
+        </div>
         <div class="order-product">
             <button class="enter" onclick="showOrderForm(true)" id="order-product-button">Place an Order</button>
             <button class= "enter" onclick="if(!finalizeOrder()){alert('You must select a product to order');}else{openForm('order-product', 'finalize-order-button',true)}" id="finalize-order-button">Finalize Order</button>
@@ -163,14 +198,15 @@
         </div>
         <button class="enter" onclick="showOrderForm(false)" id="cancel-order-button">Cancel Order</button>
     </div>
+    <div class="order-list">
     </div>
     <script>
         function openForm(popupID, buttonID, order = null){
             document.getElementById(popupID).style.display="block";
             // If the order form is being opened, call finalize order
-            if (order == null) {
-                document.getElementById(buttonID).style.display="none";
-            }
+            //if (order == null) {
+            //    document.getElementById(buttonID).style.display="none";
+            //}
         }
         function closeForm(popupID, buttonID, listID = null){
             // Hide popup, show button

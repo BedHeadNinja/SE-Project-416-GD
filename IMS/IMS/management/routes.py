@@ -18,12 +18,14 @@ def employee_info():
     user = db.session.scalar(
             sa.select(User).where(User.id == session['user_id']))
 
+    # Create form objects
+    addEmployeeForm = AddEmployeeForm()
+    removeEmployeeForm = RemoveEmployeeForm()
+
+    # Check if the user is authorized to view this page
     if user.role != 'Manager'and user.role != 'manager':
         flash("You do not have access to this page!")
         return redirect('/index')
-
-    addEmployeeForm = AddEmployeeForm()
-    removeEmployeeForm = RemoveEmployeeForm()
 
     userStats = [len(users), 0, 0]
 
@@ -35,13 +37,10 @@ def employee_info():
 @login_required
 def add_employee():
 
-    #Pull user data from database
-    users = db.session.query(User.__table__).all()
-    user = db.session.scalar(
-            sa.select(User).where(User.id == session['user_id']))
-
+    # Create form object
     addEmployeeForm = AddEmployeeForm()
 
+    # If the user chose to add an employee, add the employee to the database
     if addEmployeeForm.validate_on_submit():
         # Check if entered user id is unique
         newID = db.session.scalar(
@@ -61,21 +60,20 @@ def add_employee():
 @bp.route('/remove_employee', methods=['POST'])
 @login_required
 def remove_employee():
-    #Pull user data from database
-    users = db.session.query(User.__table__).all()
-    user = db.session.scalar(
-            sa.select(User).where(User.id == session['user_id']))
 
+    # Create form object
     removeEmployeeForm = RemoveEmployeeForm()
 
+    # If the user chose to remove an employee, remove the employee from the database
     if removeEmployeeForm.validate_on_submit():
         rmUser = db.session.scalar(sa.select(User).where(User.id == removeEmployeeForm.id.data))
-        # Check if entered user id is unique
-        
+
+        # Check that the ID is for a valid user other than the current user
         if not rmUser:
             flash("Invalid ID")
+        elif rmUser == current_user:
+            flash("You cannot remove remove your own account")
         else:
-
             db.session.delete(rmUser)
             db.session.commit()
             # Refresh page

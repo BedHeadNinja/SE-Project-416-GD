@@ -15,9 +15,8 @@
     <body>
         <div class="header">
             <div class="left-section">
-                <button onclick="window.location.href='{{ url_for('main.index') }}'" class="logo" >IMS Pro</button>
+                <input type="image" src="{{ url_for('static', filename='/image/logo.png') }}" onclick="window.location.href='{{ url_for('main.index') }}'" class="logo" ></input>
                 <div class="navbar">
-                    
                 </div>
             </div>
             <div class="right-section">

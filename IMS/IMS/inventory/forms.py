@@ -18,3 +18,9 @@ class UpdateQuantityForm(FlaskForm):
     product_id = IntegerField('Product ID')
     quantity = IntegerField('Quantity', validators=[DataRequired(), NumberRange(min=1, message="You must enter a positive value")])
     submit = SubmitField('Update Quantity')
+
+# Set the low stock warning
+class SetThresholdForm(FlaskForm):
+    product_id = IntegerField('Product ID')
+    stock_alert_minimum = IntegerField('Warning Minimum', validators=[DataRequired(), NumberRange(min=1, message="You must enter a positive value")])
+    submit = SubmitField('Set Threshold')

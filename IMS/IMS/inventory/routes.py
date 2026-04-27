@@ -6,7 +6,7 @@ import sqlalchemy as sa
 from IMS import db
 from IMS.models import Product, Order, User
 from IMS.inventory import bp
-from IMS.inventory.forms import AddProductForm, RemoveProductForm, UpdateQuantityForm
+from IMS.inventory.forms import AddProductForm, RemoveProductForm, UpdateQuantityForm, SetThresholdForm
 
 #!!!!! TEMP - REPLACE WITH arrivalTime() BLACKBOX FUNCTION !!!!!
 from datetime import datetime, timezone
@@ -29,6 +29,7 @@ def inventory():
     addProductForm = AddProductForm()
     removeProductForm = RemoveProductForm()
     updateQuantityForm = UpdateQuantityForm()
+    setThresholdForm = SetThresholdForm()
 
     # Gather product states from product data
     for product in products:
@@ -39,7 +40,7 @@ def inventory():
         elif (product.on_hand_count + product.on_order_count <= product.stock_alert_minimum + 50):
             productStats[2] += 1
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, productStats=productStats, addProductForm=addProductForm, removeProductForm=removeProductForm, updateQuantityForm=updateQuantityForm)
+    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, productStats=productStats, addProductForm=addProductForm, removeProductForm=removeProductForm, updateQuantityForm=updateQuantityForm, setThresholdForm=setThresholdForm)
 
 
 @bp.route('/add_product', methods=['GET','POST'])
@@ -115,11 +116,6 @@ def order_product():
 @bp.route('/update_quantity', methods=['GET','POST'])
 @login_required
 def update_quantity():
-    # Pull product data from database
-    #products = db.session.query(Product.__table__).all()
-
-    # List of product states
-    #productStats = [len(products), 0, 0]
 
     # Create form object
     updateQuantityForm = UpdateQuantityForm()
@@ -133,7 +129,41 @@ def update_quantity():
             # Update the on-order count of the product that's been ordered
             updatedProduct.on_hand_count=updateQuantityForm.quantity.data
             db.session.commit()
-            # Refresh Page
+            # Refresh page
             return redirect(url_for('inventory.inventory'))
 
     return redirect(url_for('inventory.inventory'))
+
+@bp.route('/set_threshold', methods=['GET', 'POST'])
+@login_required
+def set_threshold():
+
+    # Create form object
+    setThresholdForm = SetThresholdForm()
+
+    # If the user chooses to set a warning threshold,
+    if setThresholdForm.validate_on_submit():
+        thresholdProduct = db.session.scalar(sa.select(Product).where(Product.product_id == setThresholdForm.product_id.data))
+        if not thresholdProduct:
+            flash("Invalid ID")
+        else:
+            # Set the warning threshold
+            thresholdProduct.stock_alert_minimum = setThresholdForm.stock_alert_minimum.data
+            db.session.commit()
+            # Refresh page
+            return redirect(url_for('inventory.inventory'))
+
+    return redirect(url_for('inventory.inventory'))
+
+
+
+
+
+
+
+
+
+
+
+
+

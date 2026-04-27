@@ -73,11 +73,6 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
 
-    # def __init__(self, **kwargs):
-    # if 'id' not in kwargs:
-    #   kwargs['id'] == uuid4()
-    #super
-
     # Returns a list of column descriptions
     def __repr__(self):
         return '<User(id={},name={})>'.format(self.id, self.name)
@@ -95,8 +90,9 @@ class User(UserMixin, db.Model):
 #
 """
 class Product(db.Model):
+    __tablename__ = "product_table"
     # PRODUCT ID - PRIMARY KEY #!!!TESTING!!!
-    product_id: so.Mapped[int] = so.mapped_column(primary_key=True, unique=True, autoincrement=True)
+    product_id: so.Mapped[int] = so.mapped_column(primary_key=True, unique=True, autoincrement=True, index=True)
     # PRODUCT NAME
     product_name: so.Mapped[str] = so.mapped_column(sa.String(64), unique=False)
     # CURRENT PRODUCT COUNT
@@ -138,9 +134,9 @@ class Product(db.Model):
 """
 class Order(db.Model):
     # ORDER ID - PRIMARY KEY
-    order_id: so.Mapped[UUID] = so.mapped_column(primary_key=True, unique=True, default=uuid4)
+    order_id: so.Mapped[UUID] = so.mapped_column(primary_key=True, unique=True, default=uuid4, index=True)
     # PRODUCT ID
-    product_id: so.Mapped[int] = so.mapped_column()
+    product_id: so.Mapped[int] = so.mapped_column(unique=True, index=True)
     # QUANTITY
     quantity: so.Mapped[int] = so.mapped_column(default=0)
     # TIMESTAMP
@@ -149,26 +145,20 @@ class Order(db.Model):
     # ARRIVAL TIME
     arrival_time: so.Mapped[datetime] = so.mapped_column(
             index=True)
+    # STATUS
+    active: so.Mapped[bool] = so.mapped_column(default=True)
 
     # Sets default values on object creation
     def __init__(self, **kwargs):
         if 'order_id' not in kwargs:
             kwargs['order_id'] = uuid4()
+        if 'active' not in kwargs:
+            kwargs['active'] = True
         super().__init__(**kwargs)
 
     # Returns a list of column descriptions
     def __repr__(self):
-        return '<Order(order_id={}, product_id={}, quantity={}, timestamp={}, arrival_time={})>'.format(
-                self.order_id,self.product_id,self.quantity, self.timestamp, self.arrival_time)
-"""
-class LineItem(db.model):
-    # ORDER ID - PRIMARY KEY
-    # NOTE: Ties line item to its order
-    order_id: so.Mapped[UUID] = so.mapped_column(primary_key=True, unique=True, default-uuid4)
-    # PRODUCT ID
-    product_id: so.Mapped[int] =so.mapped_column()
-    # QUANTITY
-    quantity: so.Mapped[int] = soo.mapped_column(default=0)
-"""
+        return '<Order(order_id={}, quantity={}, timestamp={}, arrival_time={})>'.format(
+                self.order_id, self.quantity, self.timestamp, self.arrival_time)
 
 

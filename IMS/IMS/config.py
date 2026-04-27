@@ -11,4 +11,4 @@ class Config:
                                 #'postgresql://localhost/flask_test?user=brandon'
 
     # Set the secret key
-    SECRET_KEY = 'abcdefg'
+    SECRET_KEY = 'G883//~b49#a%xcaosgifoaiutiajkc059145185ugdjlfz,'

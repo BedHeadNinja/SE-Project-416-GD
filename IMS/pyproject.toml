@@ -16,8 +16,7 @@ dependencies = [
     "flask-migrate",
     "flask-login",
     "flask-wtf",
-    "email-validator",
-    "psycopg2-binary",
+    "pytest",
 ]
 
 [build-system]
