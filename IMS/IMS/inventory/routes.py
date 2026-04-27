@@ -111,6 +111,17 @@ def order_product():
                 return redirect(url_for('inventory.inventory'))
 
     return redirect(url_for('inventory.inventory'))
+@bp.route('/low-stock-page', methods=['GET'])
+@login_required
+
+def low_stock_page():
+    low_items = db.session.scalars(
+        sa.select(Product).where(
+            (Product.on_hand_count + Product.on_order_count) <= Product.stock_alert_minimum,
+            Product.stock_alert_minimum > 0
+        ).order_by(Product.on_hand_count.asc())
+    ).all()
+    return render_template('/inventory/low_stock.html', products=low_items)
 
 @bp.route('/update_quantity', methods=['GET','POST'])
 @login_required
