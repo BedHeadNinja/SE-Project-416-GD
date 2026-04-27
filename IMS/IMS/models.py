@@ -104,7 +104,7 @@ class Product(db.Model):
     # PRODUCT ON ORDER
     on_order_count: so.Mapped[int] = so.mapped_column(default=0)
     # STOCK ALERT MINIMUM - The lowest stock quantity reached before an alert is raised. Null by default
-    stock_alert_minimum: so.Mapped[int] = so.mapped_column(default=0, nullable=False)
+    stock_alert_minimum: so.Mapped[int] = so.mapped_column(default=5, nullable=False)
 
     # Sets default values on object creation
     # NOTE: This is required to prevent errors. Both product id and on_order_count will, with
@@ -115,7 +115,7 @@ class Product(db.Model):
             kwargs['on_order_count'] = 0
         # If no stock alert minimum is sent, set to 0
         if 'stock_alert_minimum' not in kwargs:
-            kwargs['stock_alert_minimum'] = 0
+            kwargs['stock_alert_minimum'] = 5
         super().__init__(**kwargs)
 
     # Returns a list of column descriptions
