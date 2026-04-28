@@ -26,8 +26,7 @@ def inventory():
     active_order_count = db.session.scalar(
        sa.select(sa.func.count()).select_from(Product).where(Product.on_order_count > 0)
     )
-    productStats = [len(products), 0, active_order_count], 0]
-
+    productStats = [len(products), 0, active_order_count]
     # Create form objects
     addProductForm = AddProductForm()
     removeProductForm = RemoveProductForm()
