@@ -30,15 +30,17 @@
                     </div>
                 </div>
                 </a>
+                <a href="{{ url_for('inventory.active_orders') }}" style="text-decoration:none;color:inherit;">
                 <div class="box">
                     <div class="employee-logo">
                         <img src="{{ url_for('static', filename='/image/expiring.png') }}" alt="Employee Icon" style="width: 35px; height: 35px;">
                     </div>
                     <div>
-                        <p style="font-size: 17px;">Expiring Soon</p>
+                        <p style="font-size: 17px;">Active Orders</p>
                         <p><strong>{{ productStats[2] }}</strong></p>
                     </div>
                 </div>
+                </a>
             </div>
         </div>
     <div class="tableCSS">
