@@ -33,12 +33,8 @@ def inventory():
 
     # Gather product states from product data
     for product in products:
-        # If the total count is at or below the minimum, add to low stock count
-        if (product.on_hand_count + product.on_order_count <= product.stock_alert_minimum):
+        if product.on_hand_count < 5:
             productStats[1] += 1
-        # If the total count is within 50 of the minimum, add to expiring count
-        elif (product.on_hand_count + product.on_order_count <= product.stock_alert_minimum + 50):
-            productStats[2] += 1
 
     return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, productStats=productStats, addProductForm=addProductForm, removeProductForm=removeProductForm, updateQuantityForm=updateQuantityForm, setThresholdForm=setThresholdForm)
 
@@ -119,8 +115,7 @@ def low_stock_page():
     # Lists the items that are low stock
     low_items = db.session.scalars(
         sa.select(Product).where(
-            (Product.on_hand_count + Product.on_order_count) <= Product.stock_alert_minimum,
-            Product.stock_alert_minimum > 0
+            Product.on_hand_count < 5
         ).order_by(Product.on_hand_count.asc())
     ).all()
 
