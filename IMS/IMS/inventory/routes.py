@@ -23,7 +23,10 @@ def inventory():
     products = db.session.query(Product.__table__).all()
 
     # List of product states
-    productStats = [len(products), 0, 0]
+    active_order_count = db.session.scalar(
+       sa.select(sa.func.count()).select_from(Product).where(Product.on_order_count > 0)
+    )
+    productStats = [len(products), 0, active_order_count], 0]
 
     # Create form objects
     addProductForm = AddProductForm()
@@ -162,6 +165,17 @@ def set_threshold():
             return redirect(url_for('inventory.inventory'))
 
     return redirect(url_for('inventory.inventory'))
+@bp.route('/active-orders', methods=['GET'])
+@login_required
+def active_orders():
+    products_on_order = db.session.scalars(
+        sa.select(Product).where(Product.on_order_count > 0)
+    ).all()
+    return render_template('/inventory/active_orders.html', products=products_on_order)
+
+
+
+
 
 
 
