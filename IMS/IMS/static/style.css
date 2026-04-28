@@ -24,13 +24,14 @@ body {
 .table{
   overflow-x: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   border: 2px solid black;
   padding: 20px;
   border-radius: 10px;
   width: 100%;
   height: 400px;
   font-size: 20px;
+ 
 }
 .add-order-column{
   display: none;
@@ -79,12 +80,14 @@ body {
   align-items: center;
   text-align: center;
   gap: 10px;
+  padding-bottom: 50px;
 }
 .popup-buttons{
   display: flex;
   flex-direction: row;
   align-items: center;
   text-align: center;
+  gap:8px;
 }
 .navbar{
   overflow: hidden;
@@ -109,7 +112,9 @@ body {
   background-color: transparent;
   border: none;
   cursor: pointer;
-  height: 60px;
+  height:60px;
+  padding-top: 15px;
+  padding-bottom: 15px;
   padding-left: 20px;
   padding-right: 20px;
 }

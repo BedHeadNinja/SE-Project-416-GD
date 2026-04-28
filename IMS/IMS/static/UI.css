@@ -11,7 +11,7 @@
    display: flex;
    flex-direction: row;
    justify-content: space-between;
-   background-color: black;
+   background-color: rgb(61, 56, 56);
    top: 0;
    right: 0;
    left: 0;
@@ -27,17 +27,18 @@
    align-items: center;
    margin-left: 30px;
    margin-right: 10px;
+   gap:10px;
  }
 
  .menu-button {
-   width: 80px;
-   height: 60px;
+   width: 120px;
+   height: 30px;
    background-color: black;
    color: white;
    border: none;
    font-size: 15px;
    cursor: pointer;
-
+  border-radius: 16px;
  }
 
  .menu-button:hover {
@@ -98,15 +99,16 @@
 
  .tableCSS {
   background: #ffffff;
+  display:grid;
   border-radius: 10px;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   border: 1px solid #e0ddd6;
+  
 }
 
  .table {
   border-collapse: collapse;
-  width: 100%;
 }
 
 thead th {
