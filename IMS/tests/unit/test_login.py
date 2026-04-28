@@ -2,7 +2,7 @@ import time
 from selenium.webdriver.common.by import By
 from IMS.models import User
 
-def test_loginID_elements_visible(login):
+def test_loginID_elements_visible(driver):
     """
     GIVEN a login page
     WHEN the login page is accessed
@@ -10,18 +10,18 @@ def test_loginID_elements_visible(login):
     """
 
     # Check all form elements are visible
-    assert login.find_element(By.NAME,"username").is_displayed()
-    assert login.find_element(By.CSS_SELECTOR,"input[type='submit']").is_displayed()
+    assert driver.find_element(By.NAME,"username").is_displayed()
+    assert driver.find_element(By.CSS_SELECTOR,"input[type='submit']").is_displayed()
 
-def test_login_button_clickable(login):
+def test_login_button_clickable(driver):
     """
     GIVEN a login page
     WHEN the login button is clicked
     THEN check that the element is enabled
     """
-    login.find_element(By.CSS_SELECTOR,"input[type='submit']").click()
+    driver.find_element(By.CSS_SELECTOR,"input[type='submit']").click()
     time.sleep(2)
-    assert login.find_element(By.CSS_SELECTOR,"input[type='submit']").is_enabled()
+    assert driver.find_element(By.CSS_SELECTOR,"input[type='submit']").is_enabled()
     print("Login button is clickable")
 
     #def test_required_fields(login):
@@ -34,26 +34,47 @@ def test_login_button_clickable(login):
     #login.find_element(By.CSS_SELECTOR,"input[type='submit']").click()
     #error = login.find_element(BY.XPATCH)
 
-def test_successful_ID_entry(login):
+def test_successful_ID_entry(driver):
     """
     GIVEN a login page with ID entry
     WHEN a valid ID is submitted
     THEN check that the page correctly redirects to password entry
     """
-    login.find_element(By.NAME,"username").send_keys("2")
-    login.find_element(By.CSS_SELECTOR,"input[type='submit']").click()
-    time.sleep(5)
-    assert "password" in login.current_url.lower()
+    driver.find_element(By.NAME,"username").send_keys("2")
+    driver.find_element(By.CSS_SELECTOR,"input[type='submit']").click()
+    time.sleep(3)
+    assert "password" in driver.current_url.lower()
     print("Successful ID entry")
 
-def test_successful_password_entry(login):
+    #def test_loginPassword_elements_visible()
+
+def test_successful_password_entry(driver):
     """
     GIVEN a login page
     WHEN valid login information is entered
     THEN check that login is successful
     """
-    login.find_element(By.NAME,"password").send_keys("Temporary")
-    login.find_element(By.CSS_SELECTOR,"input[type='submit']").click()
-    time.sleep(5)
-    assert "index" in login.current_url.lower()
+    driver.find_element(By.NAME,"password").send_keys("Temporary")
+    driver.find_element(By.CSS_SELECTOR,"input[type='submit']").click()
+    time.sleep(3)
+    assert "index" in driver.current_url.lower()
     print("Successful login")
+
+def test_menu_visibility(driver):
+    """
+    GIVEN a logged in user
+    WHEN clicking on drop-down menu
+    THEN check that the menu's content is correctly displayed
+    """
+    driver.find_element(By.CLASS_NAME,"menu-button").click()
+    time.sleep(3)
+    assert driver.find_element(By.CLASS_NAME,"menu-button").is_displayed()
+
+def test_inventory_navigation(driver):
+    """
+    GIVEN a logged in user
+    WHEN navigating dropdown menu
+    THEN check that navigation to the inventory page is successful
+    """
+    driver.find_element(By.LINK_TEXT,"Inventory").click()
+    assert "inventory" in driver.current_url()

@@ -1,3 +1,4 @@
+import logging
 from flask import Flask
 from .config import Config
 from sqlalchemy import MetaData
@@ -5,19 +6,9 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 
-convention = {
-    "ix": 'ix_%(column_0_label)s',
-    "uq": "uq_%(table_name)s_%(column_0_name)s",
-    "ck": "ck_%(table_name)s_%(constraint_name)s",
-    "fk": "fk_%(table_name)s_%(column_0_name)s_%(referred_table_name)s",
-    "pk": "pk_%(table_name)s"
-}
-
-metadata = MetaData(naming_convention=convention)
-
 # Define extension objects
 # db: SQLAlchemy. Handles database
-db = SQLAlchemy(metadata=metadata)
+db = SQLAlchemy()
 # migrate: flask-migrate. Handles database migrations
 migrate = Migrate()
 # login: flask-login. Handles login features like remember me. Functions with RBAC
@@ -29,6 +20,8 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     # Use configuration file
     app.config.from_object(config_class)
+    # Set logger level
+    app.logger.setLevel(logging.INFO)
 
     # Initialize extension objects
     db.init_app(app)

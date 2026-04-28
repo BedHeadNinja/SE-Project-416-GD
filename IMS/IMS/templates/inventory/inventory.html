@@ -2,15 +2,6 @@
 
 {% block content %}
     <div class="body-css">
-        <script>
-            function preloadImage(url){
-                let img = new Image();
-                img.src = url;
-            }
-            preloadImage({{ url_for('static', filename='/image/product.png') }})
-            preloadImage({{ url_for('static', filename='/image/low_stock.png') }})
-            preloadImage({{ url_for('static', filename='/image/expiring.png') }})
-        </script>
         <div class="body-header">
             <div class="employee">
                 <p style="font-size:13px;margin-bottom:4px;color: #3b2f2f;">Employee Portal</p>

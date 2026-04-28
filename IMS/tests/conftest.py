@@ -16,12 +16,12 @@ def app():
     yield app
 
 @pytest.fixture(scope="session")
-def login(request):
+def driver(request):
     # Create driver object
     driver = webdriver.Firefox()
 
     # Get the login page
-    driver.get("http://127.0.0.1:5000/ID")
+    driver.get("http://127.0.0.1:5000/auth/ID")
 
     # Make driver wait 10 seconds
     driver.implicitly_wait(10)
