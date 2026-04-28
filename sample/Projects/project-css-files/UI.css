@@ -188,8 +188,10 @@ p{
   justify-content: center;
 }
 .add-Button{
-  background-color: rgb(246, 173, 39);
+  background-color: rgb(255, 216, 20);
   width: 165px;
   height: 32px;
   border-radius: 30px;
+  cursor: pointer;
 }
+

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<style>
+  body {
+    margin: 0;
+    font-family: sans-serif;
+    background: #fff;
+    padding: 20px;
+  }
+ 
+  h2 {
+    font-size: 16px;
+    color: #111;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: center;
+  }
+ 
+  input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    font-size: 13px;
+    margin-bottom: 14px;
+    box-sizing: border-box;
+    outline: none;
+  }
+ 
+  .item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+  }
+ 
+  .item-name { color: #111; font-weight: 500; }
+  .item-id  { color: #9ca3af; font-size: 11px; margin-top: 2px; }
+ 
+  .badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 5px;
+    background: #fff4ec; 
+    color: #c2410c; 
+  } 
+  .empty { text-align: center; color: #9ca3af; font-size: 13px; padding: 24px 0; display: none; }
+</style>
+  </head>
+  <body>
+    <h2>⚠️ Low Stock Products</h2>
+    
+    <input type="text" placeholder="Search…" oninput="filter(this.value)">
+    
+    <div id="list">
+      <div class="item" data-name="abc">
+        <div><div class="item-name">abc</div><div class="item-id">ID</div></div>
+        <span class="badge">3 left</span>
+      </div>
+      <div class="item" data-name="abcd">
+        <div><div class="item-name">abcd</div><div class="item-id">ID</div></div>
+        <span class="badge">3 left</span>
+      </div><div class="item" data-name="abcde">
+        <div><div class="item-name">abcde</div><div class="item-id">ID</div></div>
+        <span class="badge">3 left</span>
+      </div>
+    </div>
+
+    <script>
+      function filter(q) {
+        const items = document.querySelectorAll('.item');
+        const query = q.toLowerCase();
+        let count = 0;
+        items.forEach(item => {
+          const show = item.dataset.name && item.dataset.name.includes(query);
+          item.style.display = show ? '' : 'none';
+          if (show) count++;
+        });
+        document.getElementById('empty').style.display = count === 0 ? 'block' : 'none';
+      }
+    </script>
+  </body>
+</html>

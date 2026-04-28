@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Amazon Project</title>
+  <link rel="stylesheet" href="project-css-files/UI.css">
+</head>
+
+<body>
+  <div class="header">
+    <div class="left-section">
+      <button class="amazon-button" onclick="location.reload()">
+        <img src="image/amazon-logo-white.png" class="amazon-logo">
+      </button>
+    </div>
+    <div class="middle-section">
+      <input type="text" placeholder="Search" class="search-bar js-search-bar">
+      <button class="search-button">
+        <img src="image/search.svg">
+      </button>
+    </div>
+    <div class="right-section">
+      <button class="return-button">Returns & Orders</button>
+      <button class="cart-button">Cart</button>
+    </div>
+  </div>
+
+  <main>
+    <div class="struture js-struture"></div>
+  </main>
+  <script>
+    let searchElement = document.querySelector('.js-search-bar').innerHTML;
+    
+  </script>
+
+  <script src="Scripts/amazon.js"></script>
+</body>
+</html>

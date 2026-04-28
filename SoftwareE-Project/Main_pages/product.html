@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Product</title>
+  <link rel="stylesheet" href="../cssFile/UI.css">
+  <link rel="stylesheet" href="../cssFile/header.css">
+  <link rel="stylesheet" href="../cssFile/addTable.css">
+  <link rel="stylesheet" href="../cssFile/E-P_Button.css">
+</head>
+
+<body>
+  <div class="header">
+    <div class="left-section">
+      <img style="margin-left: 50px; width: 200px; height: 79px; background-color: transparent;" src="../image/company-logo.png">
+    </div>
+    <div class="right-section">
+      <button class="hamburger" onclick="toggleMenu()">☰</button>
+      <div class="E_P_Button" id="EPButton">
+        <a class="product-link" href="product.html">Product</a>
+        <a class="product-link" href="employee.html">Employee</a>
+        <button class="login-button">Login</button>
+      </div>
+    </div>
+  </div>
+  <div class="body-css">
+    <div class="body-header">
+      <div class="employee">
+        <p style="font-size:13px;margin-bottom:4px;color: #3b2f2f;">Employee Portal</p>
+        <h1 class="page-title" style="font-size:24px;font-weight:500;color: #3b2f2f;">Product Directory</h1>
+      </div>
+    </div>
+    <div class="grid-middle">
+      <div class="box">
+        <div class="employee-logo">
+          <img src="/image/product.png" alt="Employee Icon" style="width: 35px; height: 35px;">
+        </div>
+        <div>
+          <p style="font-size: 17px;">Total Products</p>
+          <p><strong>1</strong></p>
+        </div>
+      </div>
+      <div class="box">
+        <div class="employee-logo">
+          <img src="/image/low_stock.png" alt="Employee Icon" style="width: 35px; height: 35px;">
+        </div>
+        <div>
+          <p style="font-size: 17px;">Low Stock</p>
+          <p><strong>1</strong></p>
+        </div>
+      </div>
+      <div class="box">
+        <div class="employee-logo">
+          <img src="/image/expiring.png" alt="Employee Icon" style="width: 35px; height: 35px;">
+        </div>
+        <div>
+          <p style="font-size: 17px;">Expiring Soon</p>
+          <p><strong>0</strong></p>
+        </div>
+      </div>
+    </div>
+    <div class="tableCSS">
+      <table>
+        <thead>
+          <tr>
+            <th>Product Name</th>
+            <th>ID</th>
+            <th>Count</th>
+            <th>Exp.date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>abc</td>
+            <td>abc</td>
+            <td>abc</td>
+            <td>abc</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <script src="../jsFile/E-P-Button.js"> </script>
+</body>
+
+</html>
