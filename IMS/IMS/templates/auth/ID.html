@@ -4,7 +4,4 @@
 {% block loginField %}
     {{ form.username.label }}
     {{ form.username(class="placeholder", title="false") }}
-    {% for error in form.username.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-    {% endfor %}
 {% endblock %}

@@ -42,7 +42,7 @@ def test_new_product():
     assert product.product_name == "Test Product"
     assert product.on_hand_count == "500"
     assert product.on_order_count == 0
-    assert product.stock_alert_minimum == 0
+    assert product.stock_alert_minimum == 5
 
 def test_new_order():
     """

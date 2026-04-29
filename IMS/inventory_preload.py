@@ -20,11 +20,12 @@ namelist = ["test","Gizmo","Gadget","Doodad","Krompus","Megakrompus","Goblin","N
 quantitylist = [15,25,57,800,47,5,19,
                 200,2,574,7547,0,7,50,
                 10000,0,42,99,1,1776,1,500]
+threshold = 5
 
 added = 0
 
 for i in range(len(namelist)):
-    p = Product(product_name=namelist[i], on_hand_count=quantitylist[i])
+    p = Product(product_name=namelist[i], on_hand_count=quantitylist[i], stock_alert_minimum=threshold)
     inDatabase = db.session.scalar(sa.select(Product).where(Product.product_name == p.product_name))
 
     if not inDatabase:

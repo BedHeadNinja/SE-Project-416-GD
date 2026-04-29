@@ -44,13 +44,11 @@ def load_user(id):
 """
 class User(UserMixin, db.Model):
     # ID - PRIMARY KEY
-    id: so.Mapped[int] = so.mapped_column(primary_key=True)
-    # USERNAME
-    #username: so.mapped[str] = so.mapped_column(sa.String(64), index=True, unique=True)
-    # !!!TESTING!!! EMAIL
-    #email: so.mapped[str] = so.mapped_column(sa.String(120), index=True, unique=True)
-    # NAME - Not unique !!MAY BE REPLACED BY USERNAME LATER
+    id: so.Mapped[int] = so.mapped_column(primary_key=True, unique=True)
+    # FIRST NAME - User's first name
     name: so.Mapped[str] = so.mapped_column(sa.String(64), unique=False)
+    # LAST NAME: User's last name
+    #last_name: so.Mapped[str] = so.mapped_column(sa.String(64), unique=False)
     # PASSWORD_HASH: Hashed for security
     password_hash: so.Mapped[Optional[str]] = so.mapped_column(sa.String(256))
     # ROLE: User's role. Employee by default

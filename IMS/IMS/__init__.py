@@ -20,8 +20,6 @@ def create_app(config_class=Config):
     app = Flask(__name__)
     # Use configuration file
     app.config.from_object(config_class)
-    # Set logger level
-    app.logger.setLevel(logging.INFO)
 
     # Initialize extension objects
     db.init_app(app)
