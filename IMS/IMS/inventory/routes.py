@@ -23,8 +23,10 @@ def inventory():
     products = db.session.query(Product.__table__).all()
 
     # List of product states
-    productStats = [len(products), 0, 0]
-
+    active_order_count = db.session.scalar(
+       sa.select(sa.func.count()).select_from(Product).where(Product.on_order_count > 0)
+    )
+    productStats = [len(products), 0, active_order_count]
     # Create form objects
     addProductForm = AddProductForm()
     removeProductForm = RemoveProductForm()
@@ -33,12 +35,8 @@ def inventory():
 
     # Gather product states from product data
     for product in products:
-        # If the total count is at or below the minimum, add to low stock count
-        if (product.on_hand_count + product.on_order_count <= product.stock_alert_minimum):
+        if product.on_hand_count < 5:
             productStats[1] += 1
-        # If the total count is within 50 of the minimum, add to expiring count
-        elif (product.on_hand_count + product.on_order_count <= product.stock_alert_minimum + 50):
-            productStats[2] += 1
 
     return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, productStats=productStats, addProductForm=addProductForm, removeProductForm=removeProductForm, updateQuantityForm=updateQuantityForm, setThresholdForm=setThresholdForm)
 
@@ -119,8 +117,7 @@ def low_stock_page():
     # Lists the items that are low stock
     low_items = db.session.scalars(
         sa.select(Product).where(
-            (Product.on_hand_count + Product.on_order_count) <= Product.stock_alert_minimum,
-            Product.stock_alert_minimum > 0
+            Product.on_hand_count < 5
         ).order_by(Product.on_hand_count.asc())
     ).all()
 
@@ -167,6 +164,17 @@ def set_threshold():
             return redirect(url_for('inventory.inventory'))
 
     return redirect(url_for('inventory.inventory'))
+@bp.route('/active-orders', methods=['GET'])
+@login_required
+def active_orders():
+    products_on_order = db.session.scalars(
+        sa.select(Product).where(Product.on_order_count > 0)
+    ).all()
+    return render_template('/inventory/active_orders.html', products=products_on_order)
+
+
+
+
 
 
 

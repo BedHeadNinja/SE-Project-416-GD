@@ -7,6 +7,8 @@
                 <p style="font-size:13px;margin-bottom:4px;color: #3b2f2f;">Employee Portal</p>
                 <h1 class="page-title" style="font-size:24px;font-weight:500;color: #3b2f2f;">Product Directory</h1>
             </div>
+        </div>
+
             <div class="grid-middle">
                 <div class="box">
                     <div class="employee-logo">
@@ -17,6 +19,7 @@
                         <p><strong>{{ productStats[0] }}</strong></p>
                     </div>
                 </div>
+                <a href="{{ url_for('inventory.low_stock_page') }}" style="text-decoration:none;color:inherit;">
                 <div class="box">
                     <div class="employee-logo">
                         <img src="{{ url_for('static', filename='/image/low_stock.png') }}" alt="Employee Icon" style="width: 35px; height: 35px;">
@@ -26,15 +29,18 @@
                         <p><strong>{{ productStats[1] }}</strong></p>
                     </div>
                 </div>
+                </a>
+                <a href="{{ url_for('inventory.active_orders') }}" style="text-decoration:none;color:inherit;">
                 <div class="box">
                     <div class="employee-logo">
                         <img src="{{ url_for('static', filename='/image/expiring.png') }}" alt="Employee Icon" style="width: 35px; height: 35px;">
                     </div>
                     <div>
-                        <p style="font-size: 17px;">Expiring Soon</p>
+                        <p style="font-size: 17px;">Active Orders</p>
                         <p><strong>{{ productStats[2] }}</strong></p>
                     </div>
                 </div>
+                </a>
             </div>
         </div>
     <div class="tableCSS">
@@ -42,12 +48,12 @@
             <thead>
 
                 <tr>
-                    <td class="add-order-column">Add</td>
-                    <td>Product ID</td>
-                    <td>Product Name</td>
-                    <td>Quantity On Hand</td>
-                    <td>Quantity On Order</td>
-                    <td>Warning Threshold</td>
+                    <th class="add-order-column">Add</th>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Quantity On Hand</th>
+                    <th>Quantity On Order</th>
+                    <th>Warning Threshold</th>
                 </tr>
 
             </thead>
@@ -75,6 +81,9 @@
             </tbody>
         </table>
     </div>
+
+    <br>
+
     <div class="inventory-buttons">
         <div class="add-product">
             <button class="enter" onclick="openForm('add-product','add-product-button')" id="add-product-button">Add a Product</button>
@@ -83,17 +92,17 @@
                     {{ addProductForm.hidden_tag() }}
                 <p>
                     {{ addProductForm.product_name.label }}<br>
-                    {{ addProductForm.product_name(size=32) }}
+                    {{ addProductForm.product_name(class="placeholder") }}
                 </p>
                     
                 <p>
                     {{ addProductForm.on_hand_count.label }}<br>
-                    {{ addProductForm.on_hand_count(size=32) }}
+                    {{ addProductForm.on_hand_count(class="placeholder") }}
                 </p>
                     
                 <div class="popup-buttons">
-                    <button onclick="closeForm('add-product', 'add-product-button')" type="reset">Close</button>
-                    {{ addProductForm.submit() }}
+                    <button class="enter" onclick="closeForm('add-product', 'add-product-button')" type="reset">Close</button>
+                    {{ addProductForm.submit(class="enter") }}
                 </div>
                 </form>
             </div>
@@ -105,14 +114,14 @@
                     {{ removeProductForm.hidden_tag() }}
                 <p>
                     {{ removeProductForm.product_id.label }}<br>
-                    {{ removeProductForm.product_id(size=32) }}
+                    {{ removeProductForm.product_id(class="placeholder") }}
                 </p>
                     {% for error in removeProductForm.product_id.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 <div class="popup-buttons">
-                    <button onclick="closeForm('remove-product', 'remove-product-button')" type="reset">Close</button>
-                    {{ removeProductForm.submit() }}
+                    <button class="enter" onclick="closeForm('remove-product', 'remove-product-button')" type="reset">Close</button>
+                    {{ removeProductForm.submit(class="enter") }}
                 </div>
                 </form>
             </div>
@@ -124,21 +133,21 @@
                     {{ updateQuantityForm.hidden_tag() }}
                 <p>
                     {{ updateQuantityForm.product_id.label }}<br>
-                    {{ updateQuantityForm.product_id(size=32) }}
+                    {{ updateQuantityForm.product_id(class="placeholder") }}
                 </p>
                     {% for error in updateQuantityForm.product_id.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 <p>
                     {{ updateQuantityForm.quantity.label }}<br>
-                    {{ updateQuantityForm.quantity(size=32)}}
+                    {{ updateQuantityForm.quantity(class="placeholder")}}
                 </p>
                     {% for error in updateQuantityForm.quantity.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 <div class="popup-buttons">
-                    <button onclick="closeForm('update-quantity', 'update-quantity-button')" type="reset">Close</button>
-                    {{ updateQuantityForm.submit() }}
+                    <button class="enter" onclick="closeForm('update-quantity', 'update-quantity-button')" type="reset">Close</button>
+                    {{ updateQuantityForm.submit(class="enter") }}
                 </div>
                 </form>
             </div>
@@ -150,21 +159,21 @@
                     {{ setThresholdForm.hidden_tag() }}
                 <p>
                     {{ setThresholdForm.product_id.label }}<br>
-                    {{ setThresholdForm.product_id(size=32) }}
+                    {{ setThresholdForm.product_id(class="placeholder") }}
                 </p>
                     {% for error in setThresholdForm.product_id.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 <p>
                     {{ setThresholdForm.stock_alert_minimum.label }}<br>
-                    {{ setThresholdForm.stock_alert_minimum(size=32)}}
+                    {{ setThresholdForm.stock_alert_minimum(class="placeholder")}}
                 </p>
                     {% for error in setThresholdForm.stock_alert_minimum.errors %}
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 <div class="popup-buttons">
-                    <button onclick="closeForm('set-threshold', 'set-threshold-button')" type="reset">Close</button>
-                    {{ setThresholdForm.submit() }}
+                    <button class="enter" onclick="closeForm('set-threshold', 'set-threshold-button')" type="reset">Close</button>
+                    {{ setThresholdForm.submit(class="enter") }}
                 </div>
                 </form>
             </div>
@@ -189,6 +198,8 @@
         </div>
         <button class="enter" onclick="showOrderForm(false)" id="cancel-order-button">Cancel Order</button>
     </div>
+
+    
     <div class="order-list">
     </div>
     <script>
