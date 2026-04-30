@@ -102,7 +102,8 @@
   display:grid;
   border-radius: 10px;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
-  overflow: hidden;
+  overflow-y: auto;
+  max-height: 60vh;
   border: 1px solid #e0ddd6;
   
 }
@@ -119,6 +120,10 @@ thead th {
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: #888;
+  position: sticky;
+  top: 0;
+  background: #f9f8f5;
+  z-index: 1;
 }
 
 thead tr {
