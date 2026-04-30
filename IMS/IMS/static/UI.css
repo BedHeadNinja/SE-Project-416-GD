@@ -145,7 +145,7 @@ tbody td {
  .grid-middle {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 10px;
 }
 
 .box {
@@ -182,7 +182,7 @@ tbody td {
 .body-css {
   align-items: center;
   max-width: 960px;
-  margin: 20px auto;
+  margin: 20px auto 0;
   padding: 0 24px;
 }
 .page-title {
