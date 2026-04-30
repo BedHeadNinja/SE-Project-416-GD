@@ -79,8 +79,9 @@ body {
   flex-direction: row;
   align-items: center;
   text-align: center;
+  justify-content: center;
   gap: 10px;
-  padding-bottom: 50px;
+  padding-bottom: 20px;
 }
 .popup-buttons{
   display: flex;
