@@ -22,7 +22,7 @@ def inventory():
     # Pull product data from database
     products = db.session.query(Product.__table__).all()
 
-    # List of product states
+    # List of product stats
     active_order_count = db.session.scalar(
        sa.select(sa.func.count()).select_from(Product).where(Product.on_order_count > 0)
     )
@@ -33,12 +33,12 @@ def inventory():
     updateQuantityForm = UpdateQuantityForm()
     setThresholdForm = SetThresholdForm()
 
-    # Gather product states from product data
+    # Gather product stats from product data
     for product in products:
         if product.on_hand_count < 5:
             productStats[1] += 1
 
-    return render_template('/inventory/inventory.html',title='PLACEHOLDER', products=products, productStats=productStats, addProductForm=addProductForm, removeProductForm=removeProductForm, updateQuantityForm=updateQuantityForm, setThresholdForm=setThresholdForm)
+    return render_template('/inventory/inventory.html',title='Inventory', products=products, productStats=productStats, addProductForm=addProductForm, removeProductForm=removeProductForm, updateQuantityForm=updateQuantityForm, setThresholdForm=setThresholdForm)
 
 
 @bp.route('/add_product', methods=['GET','POST'])

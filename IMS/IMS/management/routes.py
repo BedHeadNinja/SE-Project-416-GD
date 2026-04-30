@@ -29,7 +29,7 @@ def employee_info():
 
     userStats = [len(users), 0, 0]
 
-    return render_template('management/employee_info.html', users=users, userStats=userStats, title='PLACEHOLDER - Employee Information', addEmployeeForm=addEmployeeForm, removeEmployeeForm=removeEmployeeForm)
+    return render_template('management/employee_info.html', users=users, userStats=userStats, title='Employee Information - IMS', addEmployeeForm=addEmployeeForm, removeEmployeeForm=removeEmployeeForm)
 
 
 

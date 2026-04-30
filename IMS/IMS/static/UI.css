@@ -97,16 +97,22 @@
    cursor: pointer;
  }
 
- .tableCSS {
+ #tableCSS {
   background: #ffffff;
   display:grid;
   border-radius: 10px;
   box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
   overflow: hidden;
   border: 1px solid #e0ddd6;
-  
+  width: 100%;
 }
-
+.table-header{
+    width: 10%
+    padding: 10;
+}
+.table-row{
+    display: table-row;
+}
  .table {
   border-collapse: collapse;
 }
@@ -139,6 +145,7 @@ tbody td {
 
  .grid-middle {
   display: grid;
+  max-width: 960px;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
@@ -176,7 +183,7 @@ tbody td {
 }
 .body-css {
   align-items: center;
-  max-width: 960px;
+  width: 75%;
   margin: 20px auto;
   padding: 0 24px;
 }

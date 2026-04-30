@@ -2,13 +2,6 @@
 
 {% block content %}
     <div class="body-css">
-        <div class="body-header">
-            <div class="employee">
-                <p style="font-size:13px;margin-bottom:4px;color: #3b2f2f;">Employee Portal</p>
-                <h1 class="page-title" style="font-size:24px;font-weight:500;color: #3b2f2f;">Product Directory</h1>
-            </div>
-        </div>
-
             <div class="grid-middle">
                 <div class="box">
                     <div class="employee-logo">
@@ -42,64 +35,22 @@
                 </div>
                 </a>
             </div>
-        </div>
-    <div class="tableCSS">
-        <table>
-            <thead>
-
-                <tr>
-                    <th class="add-order-column">Add</th>
-                    <th>Product ID</th>
-                    <th>Product Name</th>
-                    <th>Quantity On Hand</th>
-                    <th>Quantity On Order</th>
-                    <th>Warning Threshold</th>
-                </tr>
-
-            </thead>
-            <tbody>
-                {% for product in products %}
-                <tr>
-                    <td class="add-order-column"><input class="order-checkbox" type="checkbox" id="{{ product[0] }}"></td>
-                    {% for column in product %}
-                        {% if ( (column == product[2]) and (product[-1]) ) %}
-                            {% if (product[2] < product[-1]) %}
-                                <td style="color: red;">{{ product[2] }}</td>
-                            {% else %}
-                                <td>{{ product[2] }}</td>
-                            {% endif %}
-                        {% else %}
-                            {% if column != None %}
-                                <td>{{ column }}</td>
-                            {% else %}
-                                <td>N/A</td>
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-
-    <br>
-
     <div class="inventory-buttons">
         <div class="add-product">
             <button class="enter" onclick="openForm('add-product','add-product-button')" id="add-product-button">Add a Product</button>
-            <div class="product-popup" id="add-product"> 
+            <div class="product-popup" id="add-product">
                 <form action="{{ url_for('inventory.add_product') }}" method="POST" id="add-product-form">
                     {{ addProductForm.hidden_tag() }}
                 <p>
                     {{ addProductForm.product_name.label }}<br>
                     {{ addProductForm.product_name(class="placeholder") }}
                 </p>
-                    
+
                 <p>
                     {{ addProductForm.on_hand_count.label }}<br>
                     {{ addProductForm.on_hand_count(class="placeholder") }}
                 </p>
-                    
+
                 <div class="popup-buttons">
                     <button class="enter" onclick="closeForm('add-product', 'add-product-button')" type="reset">Close</button>
                     {{ addProductForm.submit(class="enter") }}
@@ -198,10 +149,47 @@
         </div>
         <button class="enter" onclick="showOrderForm(false)" id="cancel-order-button">Cancel Order</button>
     </div>
-
-    
-    <div class="order-list">
+    <div class="navbar">
+    <input type="text" id="search" onkeyup="tableSearch()" placeholder="Search Products">
     </div>
+    <div id="tableCSS">
+        <table>
+            <thead>
+                <tr class="table-headers">
+                    <th class="add-order-column">Add</th>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Quantity On Hand</th>
+                    <th>Quantity On Order</th>
+                    <th>Warning Threshold</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr class="table-row">
+                    <td class="add-order-column"><input class="order-checkbox" type="checkbox" id="{{ product[0] }}"></td>
+                    {% for column in product %}
+                        {% if ( (column == product[2]) and (product[-1]) ) %}
+                            {% if (product[2] < product[-1]) %}
+                                <td style="color: red;">{{ product[2] }}</td>
+                            {% else %}
+                                <td>{{ product[2] }}</td>
+                            {% endif %}
+                        {% else %}
+                            {% if column != None %}
+                                <td>{{ column }}</td>
+                            {% else %}
+                                <td>N/A</td>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <br>
     <script>
         function openForm(popupID, buttonID, order = null){
             document.getElementById(popupID).style.display="block";
@@ -234,11 +222,11 @@
                 const productId = document.createElement("input");
                 const idCol = document.createElement("p");
                 const quantityCol = document.createElement("input");
-                //const nameCol = document.createElement('p');
+                const nameCol = document.createElement('p');
 
-                // IN PROGRESS
+                // Set name attributes
                 //nameCol.setAttribute("class", "productNames");
-                //nameCol.innerText =
+                //nameCol.innerText = id.product_name;
 
                 // Set id attributes
                 // NOTE: This element is invisible, and exists only for filling the form with the proper values
@@ -263,6 +251,7 @@
                 div.setAttribute("class", "lineitem-div");
 
                 // Add the elements within the div
+                //div.appendChild(nameCol);
                 div.appendChild(productId);
                 div.appendChild(idCol);
                 div.appendChild(quantityCol);
@@ -285,6 +274,7 @@
                 document.getElementById('add-product-button').style.display="none";
                 document.getElementById('remove-product-button').style.display="none";
                 document.getElementById('update-quantity-button').style.display="none";
+                document.getElementById('set-threshold-button').style.display="none";
                 document.getElementById('order-product-button').style.display="none";
                 document.getElementById('finalize-order-button').style.display="block";
                 document.getElementById('cancel-order-button').style.display="block";
@@ -297,6 +287,7 @@
                 document.getElementById('add-product-button').style.display="block";
                 document.getElementById('remove-product-button').style.display="block";
                 document.getElementById('update-quantity-button').style.display="block";
+                document.getElementById('set-threshold-button').style.display="block";
                 document.getElementById('order-product-button').style.display="block";
                 document.getElementById('finalize-order-button').style.display="none";
                 document.getElementById('cancel-order-button').style.display="none";
@@ -367,6 +358,37 @@
                 .then(data => console.log(data))
                 // Catch any network call error that occurs
                 .catch( error => console.error('Fetch error:',error));
+        }
+        function tableSearch(){
+            // Get search input
+            const query = document.getElementById("search");
+
+            // Set value for filtering search results
+            const filter = query.value.toLowerCase();
+
+            // Get the inventory table and table row
+            const table = document.getElementById("tableCSS");
+            const tr = table.getElementsByTagName("tr");
+
+            // Search the table for results matching the query
+            for (let i = 0; i < tr.length; i++){
+                td = tr[i].getElementsByTagName("td")[2];
+
+                // If contentx exist, evaluate them
+                if (td){
+
+                    const text = td.textContent || td.innerText;
+
+                    // If the contents are within a range of the filter, show them
+                    if (text.toLowerCase().indexOf(filter) <= -1){
+                        tr[i].style.display = "none";
+                    }
+                    else{
+                        tr[i].style.display = "table-row";
+                    }
+                }
+            }
+
         }
     </script>
 {% endblock %}

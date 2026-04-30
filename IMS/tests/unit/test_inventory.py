@@ -34,7 +34,7 @@ def test_add_product_button(login_driver):
 
 def test_add_product_visible(login_driver):
     """
-    GIVEN a logged in user
+    GIVEN a logged in user with role "manager"
     WHEN attempting to add a product
     THEN check that the form is visible
     """
@@ -43,7 +43,26 @@ def test_add_product_visible(login_driver):
 
     #def test_add_product(login_driver):
     """
-    GIVEN a
-    WHEN
-    THEN
+    GIVEN a logged in user with role "manager"
+    WHEN attempting to add a product
+    THEN test that the product is successfully added
     """
+
+    #login_driver.find_element(By.ID,"product_name").send_keys("add_product_test_name")
+    #login_driver.find_element(By.ID,"on_hand_count").send_keys("4242")
+    #login_driver.find_element(By.ID,"submit").click()
+
+    #table = driver.find_element(By.ID,"tableCSS")
+    #rows = table.find_elements(By.XPATH,".//tbody/tr")
+
+    #for row in rows:
+    #    if
+    #    for cell in row
+    #    if row.text.lower().contains("add_product_test_name")
+    #        product_name = row.text.lower()
+    #        product
+
+    #assert "add_product_test_name" in product_name
+
+
+
