@@ -223,6 +223,6 @@ tbody td {
 
 .buttonArea {
   display: flex;
-  justify-content: right;
+  justify-content: left;
   gap: 8px;
 }
