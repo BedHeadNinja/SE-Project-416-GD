@@ -11,10 +11,12 @@
    display: flex;
    flex-direction: row;
    justify-content: space-between;
-   background-color: rgb(61, 56, 56);
+   background-color: rgb(89, 89, 89);
    top: 0;
    right: 0;
    left: 0;
+   position: sticky;
+   margin: -8px;
  }
  .left-section {
    display: flex;
@@ -130,7 +132,7 @@ thead th {
   position: sticky;
   top: 0;
   background: #f9f8f5;
-  z-index: 1;
+  z-index: 999;
 }
 
 thead tr {
@@ -210,8 +212,9 @@ tbody td {
   border: none;
   cursor: pointer;
   transition: all 0.18s;
-  background-color: #f3f0e9;
+  background-color: rgb(192, 192, 192);
   border-radius: 10px;
+  font-weight: bold;
 }
 
 .page {
@@ -223,6 +226,6 @@ tbody td {
 
 .buttonArea {
   display: flex;
-  justify-content: right;
+  justify-content: left;
   gap: 8px;
 }
