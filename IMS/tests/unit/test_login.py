@@ -113,12 +113,11 @@ def test_logout(driver):
     THEN check that the user is successfully logged out
     """
 
-    driver.find_element(By.CLASS_NAME,"menu-button").click()
+    assert driver.find_element(By.ID,"menu-logout-button").is_displayed()
+
+    driver.find_element(By.ID,"menu-logout-button").click()
     time.sleep(3)
 
-    assert driver.find_element(By.CLASS_NAME,"menu-button").is_displayed()
-
-    driver.find_element(By.PARTIAL_LINK_TEXT,"Log").click()
     assert "id" in driver.current_url.lower()
 
 def test_login_redirect(driver):

@@ -19,13 +19,13 @@
                 <input type="image" src="{{ url_for('static', filename='/image/logo.png') }}" onclick="window.location.href='{{ url_for('main.index') }}'" class="logo" ></input>
             </div>
             <div class="right-section">
-                <button class="menu-button" onclick="window.location.href='{{ url_for('main.index') }}'">Home</button> <br>
-                <button class="menu-button" onclick="window.location.href='{{ url_for('inventory.inventory') }}'">Inventory</button><br>
-                <button class="menu-button" onclick="window.location.href='{{ url_for('management.employee_info') }}'">Employee Info</button><br>
+                <button class="menu-button" id="menu-home-button" onclick="window.location.href='{{ url_for('main.index') }}'">Home</button> <br>
+                <button class="menu-button" id="menu-inventory-button" onclick="window.location.href='{{ url_for('inventory.inventory') }}'">Inventory</button><br>
+                <button class="menu-button" id="menu-employee-info-button" onclick="window.location.href='{{ url_for('management.employee_info') }}'">Employee Info</button><br>
                     {% if current_user.is_anonymous %}
-                    <button class="menu-button" onclick="window.location.href='{{ url_for('auth.loginID') }}'">Log in</button>
+                    <button class="menu-button" id="menu-login-button" onclick="window.location.href='{{ url_for('auth.loginID') }}'">Log in</button>
                     {% else %}
-                    <button class="menu-button" onclick="window.location.href='{{ url_for('auth.logout') }}'">Log out</button>
+                    <button class="menu-button" id="menu-logout-button" onclick="window.location.href='{{ url_for('auth.logout') }}'">Log out</button>
                     {% endif %}     
             </div>
         </div>
