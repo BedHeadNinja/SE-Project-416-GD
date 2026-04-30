@@ -43,46 +43,7 @@
                 </a>
             </div>
         </div>
-    <div class="tableCSS">
-        <table>
-            <thead>
-
-                <tr>
-                    <th class="add-order-column">Add</th>
-                    <th>Product ID</th>
-                    <th>Product Name</th>
-                    <th>Quantity On Hand</th>
-                    <th>Quantity On Order</th>
-                    <th>Warning Threshold</th>
-                </tr>
-
-            </thead>
-            <tbody>
-                {% for product in products %}
-                <tr>
-                    <td class="add-order-column"><input class="order-checkbox" type="checkbox" id="{{ product[0] }}"></td>
-                    {% for column in product %}
-                        {% if ( (column == product[2]) and (product[-1]) ) %}
-                            {% if (product[2] < product[-1]) %}
-                                <td style="color: red;">{{ product[2] }}</td>
-                            {% else %}
-                                <td>{{ product[2] }}</td>
-                            {% endif %}
-                        {% else %}
-                            {% if column != None %}
-                                <td>{{ column }}</td>
-                            {% else %}
-                                <td>N/A</td>
-                            {% endif %}
-                        {% endif %}
-                    {% endfor %}
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-
-    <br>
+     <br>
 
     <div class="inventory-buttons">
         <div class="add-product">
@@ -199,6 +160,46 @@
         <button class="enter" onclick="showOrderForm(false)" id="cancel-order-button">Cancel Order</button>
     </div>
 
+    <div class="tableCSS">
+        <table>
+            <thead>
+
+                <tr>
+                    <th class="add-order-column">Add</th>
+                    <th>Product ID</th>
+                    <th>Product Name</th>
+                    <th>Quantity On Hand</th>
+                    <th>Quantity On Order</th>
+                    <th>Warning Threshold</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td class="add-order-column"><input class="order-checkbox" type="checkbox" id="{{ product[0] }}"></td>
+                    {% for column in product %}
+                        {% if ( (column == product[2]) and (product[-1]) ) %}
+                            {% if (product[2] < product[-1]) %}
+                                <td style="color: red;">{{ product[2] }}</td>
+                            {% else %}
+                                <td>{{ product[2] }}</td>
+                            {% endif %}
+                        {% else %}
+                            {% if column != None %}
+                                <td>{{ column }}</td>
+                            {% else %}
+                                <td>N/A</td>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+   
     
     <div class="order-list">
     </div>
