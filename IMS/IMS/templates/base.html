@@ -5,19 +5,13 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='login.css') }}">
 <html>
     <head>
-        <!-- Recommended meta tags -->
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <!-- PyScript CSS -->
-        <link rel="stylesheet" href="https://pyscript.net/releases/2024.2.1/core.css">
-        <!-- This script tag bootstraps PyScript -->
-        <script type="module" src="https://pyscript.net/releases/2024.2.1/core.js"></script>
         {% if title %}
         <title>{{ title }} - IMS </title>
         {% else %}
         <title>IMS</title>
         {% endif %}
-        <link rel="preload" href="{{ url_for('static', filename='/image/logo.png') }}" as="image" type="image/jpg">
     </head>
     <body>
         <div class="header">
