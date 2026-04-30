@@ -111,7 +111,7 @@
   overflow-y: auto;  
 }
 .table-header{
-    width: 10%
+    width: 10%;
     padding: 10;
 }
 .table-row{
@@ -132,7 +132,6 @@ thead th {
   position: sticky;
   top: 0;
   background: #f9f8f5;
-  z-index: 999;
 }
 
 thead tr {

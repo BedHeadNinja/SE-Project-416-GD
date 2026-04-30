@@ -110,6 +110,7 @@ def order_product():
                 return redirect(url_for('inventory.inventory'))
 
     return redirect(url_for('inventory.inventory'))
+
 @bp.route('/low-stock-page', methods=['GET'])
 @login_required
 def low_stock_page():
@@ -164,6 +165,7 @@ def set_threshold():
             return redirect(url_for('inventory.inventory'))
 
     return redirect(url_for('inventory.inventory'))
+
 @bp.route('/active-orders', methods=['GET'])
 @login_required
 def active_orders():

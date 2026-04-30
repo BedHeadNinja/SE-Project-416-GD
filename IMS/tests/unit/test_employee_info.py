@@ -29,3 +29,13 @@ def test_add_employee_visible(login_driver):
     """
 
     assert login_driver.find_element(By.ID,"add-employee").is_displayed()
+
+    #def test_add_employee()
+    """
+    GIVEN a logged in user
+    WHEN attempting to add an employee
+    THEN check that the form is visible
+    """
+    #login_driver.find_eBy.ID,"name").send_keys("add_employee_test_name")
+    #login_driver.find_eBy.ID,"id").send_keys("4242")
+    #login_driver.find_eBy.ID,"role").click()
