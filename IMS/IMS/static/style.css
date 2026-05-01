@@ -81,7 +81,7 @@ body {
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  border: 2px solid black:
+  border: 2px solid black;
   z-index: 2;
 }
 .inventory-buttons{
