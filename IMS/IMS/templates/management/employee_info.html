@@ -27,21 +27,23 @@
                 <p><strong>{{ userStats[1] }}</strong></p>
             </div>
         </div>
+        </a>
         <a href="{{ url_for('management.employee_list_page') }}" style="text-decoration:none;color:inherit;">
         <div class="box">
             <div class="employee-logo">
-                <img src="{{ url_for('static', filename='image/e.png') }}" alt="Employee Icon" style="width: 35px; height: 35px;">
+                <img src="{{ url_for('static', filename='image/employee.png') }}" alt="Employee Icon" style="width: 35px; height: 35px;">
             </div>
             <div>
                 <p style="font-size: 17px;">Employees</p>
                 <p><strong>{{ userStats[2] }}</strong></p>
             </div>
         </div>
+        </a>
     </div>
      <div class="buttonArea">
             <button class="enter" onclick="openaddElement(); ('add-employee','add-employee-button');" id="add-employee-button">Add Employee</button>
             <button class="enter" onclick="openRemoveElement(); ('remove-employee','remove-employee-button');" id="remove-employee-button">Remove Employee</button>
-        </div>
+    </div>
     <div class="tableCSS" id="employee-table">
         <table>
             <thead>

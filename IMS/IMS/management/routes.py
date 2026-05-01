@@ -27,6 +27,7 @@ def employee_info():
         flash("You do not have access to this page!")
         return redirect('/index')
 
+    # Get the total number of emplyees and managers
     managers_count = sum(1 for u in users if u.role and u.role.lower() == 'manager')
     employees_count = sum(1 for u in users if u.role and u.role.lower() == 'employee')
     userStats = [len(users), managers_count, employees_count]
@@ -103,9 +104,10 @@ def employee_list_page():
     # Get all employees with the employee role, and display them in ascending id order
     employees = db.session.scalars(
         sa.select(User).where(
-            User.role == 'employee'
+            User.role == 'Employee'
             ).order_by(User.id.asc())
         ).all()
+    print(employees)
 
     return render_template('/management/employee_list.html', title="Employee List", employees=employees)
 
