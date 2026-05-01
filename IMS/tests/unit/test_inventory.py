@@ -51,7 +51,7 @@ def test_add_product(login_driver):
     login_driver.find_element(By.ID,"on_hand_count").send_keys("4242")
     login_driver.find_element(By.ID,"submit").click()
 
-    table = login_driver.find_element(By.ID,"tableCSS")
+    table = login_driver.find_element(By.ID,"inventory-table")
     rows = table.find_elements(By.XPATH,".//tbody/tr")
 
     for row in rows:
@@ -87,7 +87,7 @@ def test_remove_product(login_driver):
     WHEN attempting to remove a product
     THEN check that the product is successfully added
     """
-    table = login_driver.find_element(By.ID,"tableCSS")
+    table = login_driver.find_element(By.ID,"inventory-table")
     rows = table.find_elements(By.XPATH,".//tbody/tr")
 
     for row in rows:
