@@ -122,7 +122,7 @@ def low_stock_page():
         ).order_by(Product.on_hand_count.asc())
     ).all()
 
-    return render_template('/inventory/low_stock.html', products=low_items)
+    return render_template('/inventory/low_stock.html', title="Low Stock Items", products=low_items)
 
 @bp.route('/update_quantity', methods=['GET','POST'])
 @login_required
@@ -169,10 +169,12 @@ def set_threshold():
 @bp.route('/active-orders', methods=['GET'])
 @login_required
 def active_orders():
+    # Get all products whose on order count is positive
     products_on_order = db.session.scalars(
         sa.select(Product).where(Product.on_order_count > 0)
     ).all()
-    return render_template('/inventory/active_orders.html', products=products_on_order)
+
+    return render_template('/inventory/active_orders.html', title="Active Orders", products=products_on_order)
 
 
 

@@ -1,6 +1,15 @@
 function openForm(popupID, buttonID, order = null){
     document.getElementById(popupID).style.display="block";
     // If the order form is being opened, call finalize order
+    const popups = document.getElementsByClassName("product-popup");
+
+    // Loop through elements
+    for (let element of popups){
+        // Hide all elements that aren't the popup
+        if (element.id != popupID){
+            element.style.display = "none";
+        }
+    }
     //if (order == null) {
     //    document.getElementById(buttonID).style.display="none";
     //}
