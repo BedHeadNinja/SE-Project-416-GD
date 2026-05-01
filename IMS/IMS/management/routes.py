@@ -91,11 +91,11 @@ def manager_list_page():
     # Get all employees with the manager role, and display them in ascending id order
     managers = db.session.scalars(
         sa.select(User).where(
-            User.role == 'Manager'
+            sa.func.lower(User.role) == 'manager'
             ).order_by(User.id.asc())
         ).all()
 
-    return render_template('/management/manager_list.html', title="Manager List", employees=managers)
+    return render_template('/management/manager_list.html', title="Manager List", managers=managers)
 
 @bp.route('/employee_list_page', methods=['GET'])
 @login_required
@@ -104,7 +104,7 @@ def employee_list_page():
     # Get all employees with the employee role, and display them in ascending id order
     employees = db.session.scalars(
         sa.select(User).where(
-            User.role == 'Employee'
+            sa.func.lower(User.role) == 'employee'
             ).order_by(User.id.asc())
         ).all()
     print(employees)

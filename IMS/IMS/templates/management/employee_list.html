@@ -20,14 +20,16 @@
             </tr>
         </thead>
         <tbody>
-            {% for employee in employee %}
-            <tr>
-                <td>{{ employee.id }}</td>
-                <td>{{ employee.name }}</td>
-            </tr>
+            {% if employees %}
+                {% for employee in employees %}
+                <tr>
+                    <td>{{ employee.id }}</td>
+                    <td>{{ employee.name }}</td>
+                </tr>
+                {% endfor %}
             {% else %}
-            <tr><td colspan="2" style="text-align:center;">No Employees Found</td></tr>
-            {% endfor %}
+                <tr><td colspan="2" style="text-align:center;">No Employees Found</td></tr>
+            {% endif %}
         </tbody>
     </table>
 </div>
