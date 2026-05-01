@@ -42,14 +42,18 @@
       font-size: 20px;
     }
 
-    .placeholder {
-      color: black;
+     .placeholder {
+     color: black;
      font-size: 23.8px;
-      padding-top: 4px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }   
+     padding: 8px 12px;
+     text-align: center;
+     width: 80%;
+     display: block;
+     margin: 0 auto;
+     border: 1px solid #ccc;
+     border-radius: 6px;
+     outline: none;
+    }  
 
     .Enter-button {
       margin-top: 10px;

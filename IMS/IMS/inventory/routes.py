@@ -170,12 +170,13 @@ def set_threshold():
 @bp.route('/active-orders', methods=['GET'])
 @login_required
 def active_orders():
+    from datetime import date, timedelta
     # Get all products whose on order count is positive
     products_on_order = db.session.scalars(
         sa.select(Product).where(Product.on_order_count > 0)
     ).all()
-
-    return render_template('/inventory/active_orders.html', title="Active Orders", products=products_on_order)
+    estimated_arrival = (date.today() + timedelta(days=7)).strftime("%b %d, %Y")
+    return render_template('/inventory/active_orders.html', title="Active Orders", products=products_on_order, estimated_arrival=estimated_arrival)
 
 
 
