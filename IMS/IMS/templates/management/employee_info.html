@@ -37,8 +37,8 @@
         </div>
     </div>
      <div class="buttonArea">
-            <button class="enter" onclick="openaddElement(); ('add-employee','add-employee-button');" id="add-employee-button">Add Employee</button>
-            <button class="enter" onclick="openRemoveElement(); ('remove-employee','remove-employee-button');" id="remove-employee-button">Remove Employee</button>
+            <button class="menu-button" onclick="openaddElement(); ('add-employee','add-employee-button');" id="add-employee-button">Add Employee</button>
+            <button class="menu-button" onclick="openRemoveElement(); ('remove-employee','remove-employee-button');" id="remove-employee-button">Remove Employee</button>
         </div>
     <div class="tableCSS">
         <table>
@@ -87,7 +87,7 @@
                         <span style="color: red;">[{{ error }}]</span>
                     {% endfor %}
                 <div class="popup-buttons">
-                    {{ addEmployeeForm.submit(class="enter") }}
+                    {{ addEmployeeForm.submit(class="menu-button") }}
                 </div>
                 </form>
     </div>
@@ -103,7 +103,7 @@
                 </p>
                     
                 <div class="popup-buttons">
-                    {{ removeEmployeeForm.submit(class="enter") }}
+                    {{ removeEmployeeForm.submit(class="menu-button") }}
                 </div>
                 </form>
     </div>
