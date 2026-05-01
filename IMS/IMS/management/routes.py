@@ -82,3 +82,30 @@ def remove_employee():
             return redirect(url_for('management.employee_info'))
 
     return redirect(url_for('management.employee_info'))
+
+@bp.route('/manager_list_page', methods=['GET'])
+@login_required
+def manager_list_page():
+
+    # Get all employees with the manager role, and display them in ascending id order
+    managers = db.session.scalars(
+        sa.select(User).where(
+            User.role == 'Manager'
+            ).order_by(User.id.asc())
+        ).all()
+
+    return render_template('/management/manager_list.html', title="Manager List", employees=managers)
+
+@bp.route('/employee_list_page', methods=['GET'])
+@login_required
+def employee_list_page():
+
+    # Get all employees with the employee role, and display them in ascending id order
+    employees = db.session.scalars(
+        sa.select(User).where(
+            User.role == 'employee'
+            ).order_by(User.id.asc())
+        ).all()
+
+    return render_template('/management/employee_list.html', title="Employee List", employees=employees)
+
