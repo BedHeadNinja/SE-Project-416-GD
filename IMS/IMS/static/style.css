@@ -220,6 +220,14 @@ a .box:hover {
   transform: translateY(-4px);
   box-shadow: 0 12px 30px rgba(107, 58, 31, 0.18);
 }
+a[href*="manager"] .box:hover {
+  border-color: #a855f7;   /* purple for managers */
+}
+
+a[href*="employee"] .box:hover {
+  border-color: #06b6d4;   /* teal for employees */
+}
+
 
 /* Red glow for Low Stock */
 a[href*="low-stock"] .box:hover {
