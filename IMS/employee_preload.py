@@ -13,13 +13,27 @@ app.app_context().push()
 from IMS import db
 
 # Data
-firstnamelist = ["Steve","Joseph","Sarah","Henry","Natalie","Jordan",
-                "Paul","Jasmine","Christine","Jose","Vladimir","Fred"]
+firstNameList = ["Steve","Joseph","Sarah","Henry","Natalie","Jordan",
+                "Paul","Jasmine","Christine","Jose","Vladimir","Fred","Seymour","Arthur"]
 
-lastnamelist = ["Stevenson","Johnson","Copperfield","Smith","Hughman","Bobbins",
-                "Saul","Gourd","Todd","Cortez","Krakowski","Flintstone"]
+lastNameList = ["Stevenson","Johnson","Copperfield","Smith","Hughman","Bobbins",
+                "Saul","Gourd","Todd","Cortez","Krakowski","Flintstone","Posterior","Dent"]
 
 rolelist = ["Employee","Manager","Employee","Manager","Employee","Manager",
-            "Employee","Manager","Employee","Manager","Employee","Manager"]
+            "Employee","Manager","Employee","Manager","Employee","Manager","Manager","Manager"]
 
-for i in range(len())
+added = 0
+
+for i in range(len(firstNameList)):
+    u = User(id=(100+i),name=(firstNameList[i]+" "+lastNameList[i]),role=rolelist[i])
+    inDatabase = db.session.scalar(sa.select(User).where(User.id == u.id))
+
+    if not inDatabase:
+        db.session.add(u)
+        db.session.commit()
+        print(f"{u.name} successfully added to the database")
+        added += 1
+    else:
+        print(f"{u.name} already in database")
+
+print(f"User addition complete.\n{''*10}Users added: {added}\n{' '*10}Users skipped: {len(firstNameList) - added}")

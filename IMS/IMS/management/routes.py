@@ -104,7 +104,7 @@ def employee_list_page():
     # Get all employees with the employee role, and display them in ascending id order
     employees = db.session.scalars(
         sa.select(User).where(
-            User.role == 'Employee'
+            sa.func.lower(User.role) == 'employee'
             ).order_by(User.id.asc())
         ).all()
     print(employees)
