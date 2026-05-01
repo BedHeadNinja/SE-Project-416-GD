@@ -84,6 +84,7 @@ function showOrderForm(showOrder){
         for (let element of products){
             element.style.display="block";
         }
+        document.getElementById('add-header').style.display="table-cell";
         document.getElementById('add-product-button').style.display="none";
         document.getElementById('remove-product-button').style.display="none";
         document.getElementById('update-quantity-button').style.display="none";
@@ -97,6 +98,7 @@ function showOrderForm(showOrder){
         for (const element of products){
             element.style.display="none";
         }
+        document.getElementById('add-header').style.display="none";
         document.getElementById('add-product-button').style.display="block";
         document.getElementById('remove-product-button').style.display="block";
         document.getElementById('update-quantity-button').style.display="block";
