@@ -10,9 +10,6 @@ function openForm(popupID, buttonID, order = null){
             element.style.display = "none";
         }
     }
-    //if (order == null) {
-    //    document.getElementById(buttonID).style.display="none";
-    //}
 }
 function closeForm(popupID, buttonID, listID = null){
     // Hide popup, show button
