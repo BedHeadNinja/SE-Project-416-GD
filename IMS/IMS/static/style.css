@@ -204,3 +204,32 @@ body {
   background-color: #333;
   transform: translateY(-1px);
 }
+a .box {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  border: 2px solid transparent;
+}
+
+a .box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(107, 58, 31, 0.18);
+}
+
+/* Red glow for Low Stock */
+a[href*="low-stock"] .box:hover {
+  border-color: #ef4444;
+}
+
+/* Blue glow for Active Orders */
+a[href*="active-orders"] .box:hover {
+  border-color: #3b82f6;
+}
+
+/* Make the icon "wiggle" or grow slightly on hover */
+a .box:hover .employee-logo img {
+  transform: scale(1.15) rotate(-5deg);
+  transition: transform 0.25s ease;
+}
+a .box .employee-logo img {
+  transition: transform 0.25s ease;
+}
