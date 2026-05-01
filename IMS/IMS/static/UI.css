@@ -98,7 +98,7 @@
    cursor: pointer;
  }
 
- #tableCSS {
+ .tableCSS {
   background: #ffffff;
   display:grid;
   border-radius: 10px;
