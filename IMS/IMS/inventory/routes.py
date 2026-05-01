@@ -106,8 +106,9 @@ def order_product():
             else:
                 product.on_order_count += int(quantity_list[i])
                 db.session.commit()
-                # Refresh page
-                return redirect(url_for('inventory.inventory'))
+
+        # Refresh page
+        return redirect(url_for('inventory.inventory'))
 
     return redirect(url_for('inventory.inventory'))
 
