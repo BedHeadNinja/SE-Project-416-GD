@@ -27,7 +27,9 @@ def employee_info():
         flash("You do not have access to this page!")
         return redirect('/index')
 
-    userStats = [len(users), 0, 0]
+    managers_count = sum(1 for u in users if u.role and u.role.lower() == 'manager')
+    employees_count = sum(1 for u in users if u.role and u.role.lower() == 'employee')
+    userStats = [len(users), managers_count, employees_count]
 
     return render_template('management/employee_info.html', users=users, userStats=userStats, title='Employee Information - IMS', addEmployeeForm=addEmployeeForm, removeEmployeeForm=removeEmployeeForm)
 
