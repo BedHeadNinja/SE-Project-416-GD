@@ -225,11 +225,4 @@ a[href*="active-orders"] .box:hover {
   border-color: #3b82f6;
 }
 
-/* Make the icon "wiggle" or grow slightly on hover */
-a .box:hover .employee-logo img {
-  transform: scale(1.15) rotate(-5deg);
-  transition: transform 0.25s ease;
-}
-a .box .employee-logo img {
-  transition: transform 0.25s ease;
-}
+
