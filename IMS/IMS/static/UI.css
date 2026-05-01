@@ -107,6 +107,8 @@
   max-height: 60vh;
   border: 1px solid #e0ddd6;
   width: 100%;
+  position: sticky;
+  margin: -8px;
 }
 .table-header{
     width: 10%;
