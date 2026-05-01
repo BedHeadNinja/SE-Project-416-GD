@@ -135,7 +135,7 @@ thead th {
   position: sticky;
   top: 0;
   background: #f9f8f5;
-  z-inex: 2;
+  z-index: 2;
 }
 
 thead tr {
