@@ -226,4 +226,5 @@ tbody td {
   display: flex;
   justify-content: left;
   gap: 8px;
+  margin-bottom: 20px;
 }
