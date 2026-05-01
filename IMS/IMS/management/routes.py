@@ -31,7 +31,7 @@ def employee_info():
     employees_count = sum(1 for u in users if u.role and u.role.lower() == 'employee')
     userStats = [len(users), managers_count, employees_count]
 
-    return render_template('management/employee_info.html', users=users, userStats=userStats, title='Employee Information - IMS', addEmployeeForm=addEmployeeForm, removeEmployeeForm=removeEmployeeForm)
+    return render_template('management/employee_info.html', users=users, userStats=userStats, title='Employee Information', addEmployeeForm=addEmployeeForm, removeEmployeeForm=removeEmployeeForm)
 
 
 

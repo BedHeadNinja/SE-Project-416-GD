@@ -140,7 +140,7 @@ function tableSearch(){
     const filter = query.value.toLowerCase();
 
     // Get the inventory table and table row
-    const table = document.getElementById("tableCSS");
+    const table = document.getElementById("inventory-table");
     const tr = table.getElementsByTagName("tr");
 
     // Search the table for results matching the query

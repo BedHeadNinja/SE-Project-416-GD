@@ -9,4 +9,4 @@ from IMS.main import bp
 @bp.route('/index')
 @login_required
 def index():
-    return render_template('index.html',title='Home - IMS')
+    return render_template('index.html',title='Home')
