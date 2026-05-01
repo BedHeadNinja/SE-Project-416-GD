@@ -17,6 +17,8 @@
                 <th>Product ID</th>
                 <th>Product Name</th>
                 <th>Quantity </th>
+                <th>Estimated Arrival Date</th>
+                
             </tr>
         </thead>
         <tbody>
@@ -25,6 +27,7 @@
                 <td>{{ product.product_id }}</td>
                 <td>{{ product.product_name }}</td>
                 <td>{{ product.on_order_count }}</td>
+                <td>{{ estimated_arrival }}</td>
             </tr>
             {% else %}
             <tr><td colspan="3" style="text-align:center;">No active orders.</td></tr>
